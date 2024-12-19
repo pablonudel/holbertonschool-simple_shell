@@ -13,7 +13,8 @@ int main(void)
 
 	while (1)
 	{
-		write(1, "#cisfun$ ", 9);
+		if (isatty(STDIN_FILENO) == 1)
+			write(1, "#cisfun$ ", 9);
 
 		buffer = get_input(buffer, buffer_size);
 		args = split_input(buffer, " \t\n");
@@ -25,7 +26,7 @@ int main(void)
 
 		if (pid == -1)
 		{
-			perror("Error");
+			perror("Error\n");
 			free(buffer);
 			return (1);
 		}
@@ -35,7 +36,7 @@ int main(void)
 			cmd = get_cmd(args[0]);
 			if (execve(cmd, args, environ) == -1)
 			{
-				printf("Error");
+				printf("Error\n");
 				free(buffer);
 				exit(1);
 			}
