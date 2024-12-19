@@ -1,62 +1,50 @@
-#include "main.h"
+#include "shell.h"
 /**
- * main - simple shell
+ * main - 
  *
  * Return: Always 0.
  */
 int main(void)
 {
-    char *buf = NULL, *args[2];
-    size_t buf_size = 0;
-    int status, n_chars = 0;
-    pid_t pid;
+	char *buffer = NULL, *cmd, **args;
+	size_t buffer_size = 0;
+	pid_t pid;
+	int status;
 
-    while (1)
-    {
-        write(1, "#cisfun$ ", 9);
-        n_chars = getline(&buf, &buf_size, stdin);
-        if (n_chars == -1)
-        {
-            write(1, "\n", 1);
-            free(buf);
-            exit(0);
-        }
+	while (1)
+	{
+		write(1, "#cisfun$ ", 9);
 
-        args[0] = strtok(buf, " \t\n");
-        if (args[0] == NULL)
-            continue;
+		buffer = get_input(buffer, buffer_size);
+		args = split_input(buffer, " \t\n");
 
-        args[1] = NULL;
+		if (args[0] == NULL)
+			continue;
 
-        if (strtok(NULL, " \t\n") != NULL)
-        {
-            write(2, "Error: Invalid argument(s) provided\n", 36);
-            continue;
-        }
+		pid = fork();
 
-        pid = fork();
+		if (pid == -1)
+		{
+			perror("Error");
+			free(buffer);
+			return (1);
+		}
 
-        if (pid == -1)
-        {
-            perror("Error");
-            free(buf);
-            return (1);
-        }
+		if (pid == 0)
+		{
+			cmd = get_cmd(args[0]);
+			if (execve(cmd, args, environ) == -1)
+			{
+				printf("Error");
+				free(buffer);
+				exit(1);
+			}
+			exit(0);
+		}
+		else
+			wait(&status);
+	}
 
-        if (pid == 0)
-        {
-            if (execve(args[0], args, environ) == -1)
-            {
-                perror("Error");
-                free(buf);
-                exit(1);
-            }
-            exit(0);
-        }
-        else
-            wait(&status);
-    }
-
-    free(buf);
-    return (0);
+	free(buffer);
+	return (0);
 }
