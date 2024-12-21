@@ -17,6 +17,7 @@ int main(void)
 			write(1, "#cisfun$ ", 9);
 
 		buffer = get_input(buffer, buffer_size);
+
 		args = split_input(buffer, " \t\n");
 
 		if (!args)
@@ -63,8 +64,8 @@ int main(void)
 		for (i = 0; args[i]; i++)
 			free(args[i]);
 		free(args);
+		free(buffer);
 	}
 
-	free(buffer);
 	return (0);
 }
