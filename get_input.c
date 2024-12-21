@@ -9,13 +9,11 @@ char *get_input(char *buffer, size_t buffer_size)
 	{
 		if (feof(stdin))
 		{
-			free(buffer);
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			perror("Error");
-			free(buffer);
 			exit(EXIT_FAILURE);
 		}
 	}
