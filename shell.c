@@ -24,9 +24,6 @@ int main(void)
 
 		if (strcmp(args[0], "exit") == 0)
 		{
-			for (i = 0; args[i]; i++)
-				free(args[i]);
-			free(args);
 			exit(EXIT_SUCCESS);
 		}
 
