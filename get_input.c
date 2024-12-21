@@ -15,6 +15,7 @@ char *get_input(char *buffer, size_t buffer_size)
 		else
 		{
 			perror("Error");
+			free(buffer);
 			exit(EXIT_FAILURE);
 		}
 	}
