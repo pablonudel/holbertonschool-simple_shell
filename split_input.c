@@ -15,7 +15,12 @@ char **split_input(char *buffer, char *del)
 	token = strtok(buffer, del);
 	while (token)
 	{
-		tokens[i] = token;
+		tokens[i] = strdup(token);
+		if (!tokens[i])
+		{
+			perror("Error");
+			exit(EXIT_FAILURE);
+		}
 		token = strtok(NULL, del);
 		i++;
 	}
