@@ -7,8 +7,17 @@ char *get_input(char *buffer, size_t buffer_size)
 	n_chars = getline(&buffer, &buffer_size, stdin);
 	if (n_chars == -1)
 	{
-		free(buffer);
-		exit(0);
+		if (feof(stdin))
+		{
+			free(buffer);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			perror("Error");
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	return (buffer);
