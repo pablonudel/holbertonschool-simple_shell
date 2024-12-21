@@ -4,7 +4,7 @@ char **split_input(char *buffer, char *del)
 {
 	char **tokens;
 	char *token;
-	int i = 0;
+	int i = 0, j;
 
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
@@ -19,7 +19,10 @@ char **split_input(char *buffer, char *del)
 		if (!tokens[i])
 		{
 			perror("Error");
-			exit(EXIT_FAILURE);
+			for (j = 0; j < i; j++)
+				free(tokens[j]);
+			free(tokens);
+			return (NULL);
 		}
 		token = strtok(NULL, del);
 		i++;
