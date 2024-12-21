@@ -7,6 +7,7 @@
 int main(void)
 {
 	char *buffer = NULL, *cmd, **args;
+	char **env;
 	size_t buffer_size = 0;
 	pid_t pid;
 	int status, i;
@@ -36,6 +37,22 @@ int main(void)
 			free(args);
 			free(buffer);
 			exit(EXIT_SUCCESS);
+		}
+
+		if (strcmp(args[0], "env") == 0)
+		{
+			if (args[1])
+			{
+				perror("Error");
+				continue;
+			}
+			env = environ;
+			while (*env)
+			{
+				printf("%s\n", *env);
+				env++;
+			}
+			continue;
 		}
 
 		pid = fork();
