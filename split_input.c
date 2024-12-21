@@ -9,7 +9,7 @@ char **split_input(char *buffer, char *del)
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 	{
-		perror("Error");
+		fprintf(stderr, "Error: Memory allocation error\n");
 		exit(1);
 	}
 	token = strtok(buffer, del);
