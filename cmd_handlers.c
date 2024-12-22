@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * command_handler - Handles built-in and external commands
+ *
+ * @input: The user input string
+ * @args: The array of arguments
+ *
+ * Return: void
+ */
 void command_handler(char *input, char **args)
 {
 	if (!args)
@@ -20,9 +28,15 @@ void command_handler(char *input, char **args)
 
 	free_array(args);
 	free(input);
-	return;
 }
 
+/**
+ * get_cmd - Finds the full path of a command
+ *
+ * @arg: The command name
+ *
+ * Return: Full path of the command or NULL if not found
+ */
 char *get_cmd(char *arg)
 {
 	char *var = _getenv("PATH"), *tmp_var, *token, *full_path;
@@ -64,6 +78,14 @@ char *get_cmd(char *arg)
 	return (NULL);
 }
 
+/**
+ * exec_cmd - Executes an external command
+ *
+ * @input: User input string
+ * @args: Array of arguments
+ *
+ * Return: void
+ */
 void exec_cmd(char *input, char **args)
 {
 	char *command;
@@ -87,7 +109,7 @@ void exec_cmd(char *input, char **args)
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-	{   
+	{
 		if (execve(command, args, environ) == -1)
 		{
 			perror("Error");
@@ -98,7 +120,6 @@ void exec_cmd(char *input, char **args)
 		}
 	}
 	else
-		wait(&status);    
+		wait(&status);
 	free(command);
-	return;
 }

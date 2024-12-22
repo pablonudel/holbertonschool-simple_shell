@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * builtin_exit - Exits the shell
+ *
+ * @input: User input string
+ * @args: Array of arguments
+ *
+ * Return: void
+ */
 void builtin_exit(char *input, char **args)
 {
 	free(input);
@@ -7,6 +15,13 @@ void builtin_exit(char *input, char **args)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * builtin_env - Prints the current environment variables
+ *
+ * @args: The array of arguments
+ *
+ * Return: void
+ */
 void builtin_env(char **args)
 {
 	char **env = environ;

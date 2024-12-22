@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * get_input - Allocate the input line of user
+ *
+ * Return: String with user's input, or exits if error
+ */
 char *get_input(void)
 {
 	char *input = NULL;
@@ -25,6 +30,13 @@ char *get_input(void)
 	return (input);
 }
 
+/**
+ * split_input - Splits the input
+ *
+ * @input: The input string to be split
+ *
+ * Return: An array of strings, or NULL if error
+ */
 char **split_input(char *input)
 {
 	char **tokens;
@@ -47,7 +59,7 @@ char **split_input(char *input)
 		tokens[i] = strdup(token);
 		if (!tokens[i])
 		{
-			free_array(tokens);			
+			free_array(tokens);
 			perror("Error");
 			return (NULL);
 		}
