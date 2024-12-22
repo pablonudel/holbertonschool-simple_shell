@@ -1,5 +1,4 @@
 #include "shell.h"
-
 char *_getenv(const char *env_var)
 {
 	char *key;
@@ -11,12 +10,15 @@ char *_getenv(const char *env_var)
 		key = *env;
 		value = strchr(key, '=');
 
-		if (value != NULL)
+		if (value)
 		{
 			*value = '\0';
 
 			if (strcmp(env_var, key) == 0)
+			{
+				*value = '=';
 				return (value + 1);
+			}
 
 			*value = '=';
 		}
