@@ -1,29 +1,51 @@
 #include "shell.h"
 
-char *get_cmd(char *cmd)
+char *get_cmd(char *arg)
 {
-	char *path = _getenv("PATH");
+	char *var = _getenv("PATH");
+	char *tmp_var;
 	char *token;
-	char *cmd_full;
+	char *full_path;
 	struct stat st;
 
-	token = strtok(path, ":");
-	while (token)
+	if (!var)
+		return (NULL);
+
+	if (access(arg, X_OK) == 0)
 	{
-		cmd_full = malloc(strlen(token) + strlen(cmd) + 2);
-		if (!cmd_full)
-		{
-			perror("Error");
-			exit(1);
-		}
-		strcpy(cmd_full, token);
-		strcat(cmd_full, "/");
-		strcat(cmd_full, cmd);
-		if (stat(cmd_full, &st) == 0)
-			return (cmd_full);
-		free(cmd_full);
-		token = strtok(NULL, ":");
+		full_path = strdup(arg);
+		if (!full_path)
+			return (NULL);
+		return (full_path);
 	}
 
-	return (cmd);
+	tmp_var = strdup(var);
+	if (!tmp_var)
+		return (NULL);
+
+	token = strtok(tmp_var, ":");
+	while (token)
+	{
+		full_path = malloc(strlen(token) + strlen(arg) + 2);
+		if (!full_path)
+		{
+			free(tmp_var);
+			return (NULL);
+		}
+
+		strcpy(full_path, token);
+		strcat(full_path, "/");
+		strcat(full_path, arg);
+
+		if (stat(full_path, &st) == 0 && access(full_path, X_OK) == 0)
+		{
+			free(tmp_var);
+			return (full_path);
+		}
+
+		free(full_path);
+		token = strtok(NULL, ":");
+	}
+	free(tmp_var);
+	return (NULL);
 }
