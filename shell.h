@@ -12,9 +12,10 @@
 
 extern char **environ;
 
-char *get_input(char *buffer, size_t buffer_size);
-char **split_input(char *buffer, char *del);
+char *get_input(void);
+char **split_input(char *input);
+void print_env(void);
 char *_getenv(const char *env_var);
-char *get_cmd(char *cmd);
+char *get_cmd(char *arg);
 
 #endif
