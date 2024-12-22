@@ -14,8 +14,12 @@ extern char **environ;
 
 char *get_input(void);
 char **split_input(char *input);
-void print_env(void);
 char *_getenv(const char *env_var);
+void free_array(char **array);
+void command_handler(char *input, char **args);
 char *get_cmd(char *arg);
+void exec_cmd(char *input, char **args);
+void builtin_exit(char *input, char **args);
+void builtin_env(char **args);
 
 #endif
