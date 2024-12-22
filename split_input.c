@@ -1,30 +1,34 @@
 #include "shell.h"
 
-char **split_input(char *buffer, char *del)
+char **split_input(char *input)
 {
 	char **tokens;
 	char *token;
-	int i = 0, j;
+	int i = 0;
+
+	if (!input)
+		return (NULL);
 
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 	{
 		fprintf(stderr, "Error: Memory allocation error\n");
-		exit(1);
+		return (NULL);
 	}
-	token = strtok(buffer, del);
+
+	token = strtok(input, " \t\n");
 	while (token)
 	{
 		tokens[i] = strdup(token);
 		if (!tokens[i])
 		{
-			perror("Error");
-			for (j = 0; j < i; j++)
-				free(tokens[j]);
+			for (i = 0; tokens[i]; i++)
+				free(tokens[i]);
 			free(tokens);
+			fprintf(stderr, "Error: Memory allocation error\n");
 			return (NULL);
 		}
-		token = strtok(NULL, del);
+		token = strtok(NULL, " \t\n");
 		i++;
 	}
 	tokens[i] = NULL;
