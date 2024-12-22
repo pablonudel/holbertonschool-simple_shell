@@ -1,5 +1,11 @@
 #include "shell.h"
 
+void prompt(void)
+{
+	if (isatty(STDIN_FILENO) == 1)
+		write(1, "simple_shell:~$ ", 16);
+}
+
 char *_getenv(const char *env_var)
 {
 	char *key;
