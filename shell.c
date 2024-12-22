@@ -77,7 +77,8 @@ int main(void)
 			}
 			else
 				wait(&status);
-
+			
+			free(command);
 		}
 
 
@@ -85,8 +86,6 @@ int main(void)
 			free(args[i]);
 		free(args);
 		free(input);
-		if (command)
-			free(command);
 	}
 	return (0);
 }
