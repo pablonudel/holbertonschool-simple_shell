@@ -21,7 +21,7 @@ char *get_input(void)
 		}
 		else
 		{
-			perror("Error");
+			perror("hsh: Error");
 			free(input);
 			exit(EXIT_FAILURE);
 		}
