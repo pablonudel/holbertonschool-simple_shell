@@ -19,7 +19,7 @@ char *_getenv(const char *env_var);
 void free_array(char **array);
 void command_handler(char *input, char **args);
 char *get_cmd(char *arg);
-void exec_cmd(char *input, char **args);
+void exec_cmd(char **args);
 void builtin_exit(char *input, char **args);
 void builtin_env(char **args);
 
