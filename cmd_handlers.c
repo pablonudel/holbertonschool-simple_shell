@@ -39,10 +39,10 @@ void command_handler(char *input, char **args)
  */
 char *get_cmd(char *arg)
 {
-	char *var = _getenv("PATH"), *tmp_var, *token, *full_path;
+	char *path = _getenv("PATH"), *tmp_path, *token, *full_path;
 	struct stat st;
 
-	if (!var)
+	if (!path)
 		return (NULL);
 	if (access(arg, X_OK) == 0)
 	{
@@ -51,16 +51,16 @@ char *get_cmd(char *arg)
 			return (NULL);
 		return (full_path);
 	}
-	tmp_var = strdup(var);
-	if (!tmp_var)
+	tmp_path = strdup(path);
+	if (!tmp_path)
 		return (NULL);
-	token = strtok(tmp_var, ":");
+	token = strtok(tmp_path, ":");
 	while (token)
 	{
 		full_path = malloc(strlen(token) + strlen(arg) + 2);
 		if (!full_path)
 		{
-			free(tmp_var);
+			free(tmp_path);
 			return (NULL);
 		}
 		strcpy(full_path, token);
@@ -68,13 +68,13 @@ char *get_cmd(char *arg)
 		strcat(full_path, arg);
 		if (stat(full_path, &st) == 0 && access(full_path, X_OK) == 0)
 		{
-			free(tmp_var);
+			free(tmp_path);
 			return (full_path);
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
 	}
-	free(tmp_var);
+	free(tmp_path);
 	return (NULL);
 }
 
