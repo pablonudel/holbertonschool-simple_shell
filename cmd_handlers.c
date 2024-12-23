@@ -24,7 +24,7 @@ void command_handler(char *input, char **args)
 	else if (strcmp(args[0], "env") == 0)
 		builtin_env(args);
 	else
-		exec_cmd(input, args);
+		exec_cmd(args);
 
 	free_array(args);
 	free(input);
@@ -86,7 +86,7 @@ char *get_cmd(char *arg)
  *
  * Return: void
  */
-void exec_cmd(char *input, char **args)
+void exec_cmd(char **args)
 {
 	char *command;
 	pid_t pid;
@@ -95,28 +95,24 @@ void exec_cmd(char *input, char **args)
 	command = get_cmd(args[0]);
 	if (!command)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
+		fprintf(stderr, "hsh: %s: command not found\n", args[0]);
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error");
+		perror("hsh: fork");
 		free(command);
-		free(input);
-		free_array(args);
-		exit(EXIT_FAILURE);
+		return;
 	}
 	if (pid == 0)
 	{
 		if (execve(command, args, environ) == -1)
 		{
-			perror("Error");
+			perror("hsh: fork");
 			free(command);
-			free(input);
-			free_array(args);
-			exit(EXIT_FAILURE);
+			return;
 		}
 	}
 	else
