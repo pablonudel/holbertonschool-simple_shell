@@ -1,36 +1,6 @@
 #include "shell.h"
 
 /**
- * command_handler - Handles built-in and external commands
- *
- * @input: The user input string
- * @args: The array of arguments
- *
- * Return: void
- */
-void command_handler(char *input, char **args)
-{
-	if (!args)
-	{
-		free(input);
-		return;
-	}
-
-	if (!args[0])
-		return;
-
-	if (strcmp(args[0], "exit") == 0)
-		builtin_exit(input, args);
-	else if (strcmp(args[0], "env") == 0)
-		builtin_env(args);
-	else
-		exec_cmd(args);
-
-	free_array(args);
-	free(input);
-}
-
-/**
  * get_cmd - Finds the full path of a command
  *
  * @arg: The command name
