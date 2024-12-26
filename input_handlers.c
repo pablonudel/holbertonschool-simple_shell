@@ -16,6 +16,7 @@ char *get_input(void)
 	{
 		if (feof(stdin))
 		{
+			printf("\n");
 			free(input);
 			exit(EXIT_SUCCESS);
 		}
