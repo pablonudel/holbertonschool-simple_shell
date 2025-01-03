@@ -4,13 +4,15 @@
  * get_cmd - Finds the full path of a command
  *
  * @arg: The command name
+ * @error: error status
  *
  * Return: Full path of the command or NULL if not found
  */
-char *get_cmd(char *arg)
+char *get_cmd(char *arg, int *error)
 {
 	char *path = _getenv("PATH"), *tmp_path, *token, *full_path;
 	struct stat st;
+	*error = 0;
 
 	if (!path)
 		return (NULL);
@@ -31,7 +33,7 @@ char *get_cmd(char *arg)
 		if (stat(full_path, &st) == 0)
 		{
 			if (access(full_path, X_OK) != 0)
-				fprintf(stderr, "hsh: %s: permission denied\n", arg);
+				*error = 1;
 			else
 			{
 				free(tmp_path);
@@ -56,12 +58,15 @@ void exec_cmd(char **args)
 {
 	char *command;
 	pid_t pid;
-	int status;
+	int status, error;
 
-	command = get_cmd(args[0]);
+	command = get_cmd(args[0], &error);
 	if (!command)
 	{
-		fprintf(stderr, "hsh: %s: command not found\n", args[0]);
+		if (error)
+			fprintf(stderr, "hsh: %s: permission denied\n", args[0]);
+		else
+			fprintf(stderr, "hsh: %s: command not found\n", args[0]);
 		return;
 	}
 
