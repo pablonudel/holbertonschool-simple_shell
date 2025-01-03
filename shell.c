@@ -3,6 +3,9 @@
 /**
  * main - Entry point of the simple shell
  *
+ * @argc: number of arguments
+ * @argv: array of arguments
+ *
  * Return: Always 0.
  */
 int main(int argc __attribute__((unused)), char **argv)
@@ -29,12 +32,12 @@ int main(int argc __attribute__((unused)), char **argv)
 			builtin_exit(input, args);
 		else if (strcmp(args[0], "env") == 0)
 		{
-			int_PID ++;
+			int_PID++;
 			builtin_env(args);
 		}
 		else
 		{
-			int_PID ++;
+			int_PID++;
 			exec_cmd(args, int_PID, argv[0]);
 		}
 
