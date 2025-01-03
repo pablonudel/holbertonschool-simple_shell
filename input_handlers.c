@@ -16,7 +16,6 @@ char *get_input(void)
 	{
 		if (feof(stdin))
 		{
-			printf("\n");
 			free(input);
 			exit(EXIT_SUCCESS);
 		}
@@ -50,7 +49,7 @@ char **split_input(char *input)
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 	{
-		perror("Error");
+		perror("hsh: Error");
 		return (NULL);
 	}
 
@@ -61,7 +60,7 @@ char **split_input(char *input)
 		if (!tokens[i])
 		{
 			free_array(tokens);
-			perror("Error");
+			perror("hsh: Error");
 			return (NULL);
 		}
 		token = strtok(NULL, " \t\n");
