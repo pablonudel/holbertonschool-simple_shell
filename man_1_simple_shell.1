@@ -1,0 +1,98 @@
+.TH hsh 1 "January 3th, 2025" "1.0" "General Commands Manual"
+.SH NAME
+\fBhsh\fR - a simple command language interpreter (shell)
+
+.SH SYNOPSIS
+\fBhsh\fR [command_name [argument...]]
+
+.SH DESCRIPTION
+\fBhsh\fR is a basic command language interpreter designed to execute commands in interactive and no interactive mode. It reads commands from standard input, a file or pipe, and executes them sequentially. It supports the execution of external commands as well as a limited set of built-in commands. It uses the PATH environment variable to locate executable files.
+
+.SH OPTIONS
+None options supported.
+
+.SH COMMANDS
+.PP
+The following built-in commands are supported:
+.TP
+.B exit
+Terminates the shell program.
+.TP
+.B env
+Displays all environment variables to the standard output.
+
+.SH USAGE
+.PP
+.nf
+.B Interactive Mode:
+The shell waits for user input, processes each command, and displays results.
+Example:
+.if
+
+
+.RS
+.nf
+$ ./hsh
+simple_shell:~$ ls
+hsh main.c shell.c
+simple_shell:~$
+simple_shell:~$ exit
+$
+.fi
+.RE
+.PP
+.nf
+.B Non Interactive Mode:
+The shell reads input from a file or pipe and processes the command without allocating a new pseudo-terminal.
+Example:
+.if
+
+
+.RS
+.nf
+$ echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+$ cat test_ls_2
+/bin/ls
+/bin/ls
+$ cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+$
+.fi
+.RE
+
+.SH FEATURES
+.nf
+1. Command execution using PATH environment variable.
+2. Built-in commands: exit and env.
+3. Handles errors gracefully when commands are invalid.
+4. Processes commands from interactive input.
+.fi
+.SH LIMITATIONS
+.nf
+1. Does not handle special characters: ", ', `, , *, &, #.
+2. No support for piping or redirection (|, >, <).
+3. No support for variables or expansions ($, ${}).
+4. Limited error messages for complex errors.
+.fi
+
+.SH EXIT STATUS
+\fBhsh\fR will return the values of the following macros on exit:
+.PP
+.nf
+\fBEXIT_SUCCESS\fR - successful execution of a program.
+\fBEXIT_FAILURE\fR - unsuccessful execution of a program.
+.fi
+
+.SH ENVIRONMENT
+\fBPATH\fR Determines the search path for executables.
+
+.SH BUGS
+Known limitations include lack of support for special characters and advanced shell features.
+
+.SH AUTHORS
+Dan Florentin & Pablo Nudel.
+
+.SH SEE ALSO
+access(2), bash(1), execve(2), exit(3), fork(2), free(3), getline(3), getpid(2), isatty(3), malloc(3), perror(3), fprintf(3), sh(1), stat(2), strtok(3), wait(2), write(2)
