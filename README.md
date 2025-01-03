@@ -2,15 +2,15 @@
 ======================
 
 -   By Julien Barbier
--   Project to be done in teams of 2 people (team: Arsene Awounou, Ukinomeme Oziegbe)
+-   Project to be done in teams of 2 people (team: Pablo Nudel, Dan Ishimwe)
 
 Concepts
 --------
 
 *For this project, students are expected to look at these concepts:*
 
--   [Everything you need to know to start coding your own shell](https://alx-intranet.hbtn.io/concepts/64)
--   [Approaching a Project](https://alx-intranet.hbtn.io/concepts/350)
+-   [Everything you need to know to start coding your own shell](https://intranet.hbtn.io/concepts/900))
+-   [Approaching a Project](https://intranet.hbtn.io/concepts/881)
 
 Background Context
 ------------------
@@ -19,16 +19,16 @@ Write a simple UNIX command interpreter.
 
 ![](https://s3.amazonaws.com/intranet-projects-files/holbertonschool-low_level_programming/235/shell.jpeg)
 
-*^ "The Gates of Shell", by [Spencer Cheng](https://alx-intranet.hbtn.io/rltoken/AtYRSM03vJDrko9xHodxFQ "Spencer Cheng"), featuring [Julien Barbier](https://alx-intranet.hbtn.io/rltoken/-ezXgcyfhc8qU1DeUInLUA "Julien Barbier")*
+*^ "The Gates of Shell", by [Spencer Cheng](https://intranet.hbtn.io/rltoken/IBAW_i8ptSNg3Sf5hMLSJQ), featuring [Julien Barbier](https://intranet.hbtn.io/rltoken/YinaOdtW8C_NL3NlSD1Jdg)*
 
 Resources
 ---------
 
 **Read or watch**:
 
--   [Unix shell](https://alx-intranet.hbtn.io/rltoken/f0YU9TAhniMXWlSXtb64Yw "Unix shell")
--   [Thompson shell](https://alx-intranet.hbtn.io/rltoken/7LJOp2qP7qHUcsOK2-F3qA "Thompson shell")
--   [Ken Thompson](https://alx-intranet.hbtn.io/rltoken/wTSu31ZP1f7fFTJFgRQC7w "Ken Thompson")
+-   [Unix shell](https://intranet.hbtn.io/rltoken/McTQ6qvcqZZQlZtZdjdVnQ)
+-   [Thompson shell](https://intranet.hbtn.io/rltoken/FLRzIA3zLln5XV7erPHgsQ)
+-   [Ken Thompson](https://intranet.hbtn.io/rltoken/Pzs_A3Wo6LTHE8WX_uKiWg)
 -   **Everything you need to know to start coding your own shell** concept page
 
 **man or help**:
@@ -38,7 +38,7 @@ Resources
 Learning Objectives
 -------------------
 
-At the end of this project, you are expected to be able to [explain to anyone](https://alx-intranet.hbtn.io/rltoken/4mHp8pZKm5sjL4-TEJEKeg "explain to anyone"), **without the help of Google**:
+At the end of this project, you are expected to be able to [explain to anyone](https://intranet.hbtn.io/rltoken/fmCgGY50xkpiN1RkCWnLYA), **without the help of Google**:
 
 ### General
 
@@ -66,11 +66,11 @@ Requirements
 -   All your files will be compiled on Ubuntu 20.04 LTS using `gcc`, using the options `-Wall -Werror -Wextra -pedantic -std=gnu89`
 -   All your files should end with a new line
 -   A `README.md` file, at the root of the folder of the project is mandatory
--   Your code should use the `Betty` style. It will be checked using [betty-style.pl](https://github.com/holbertonschool/Betty/blob/master/betty-style.pl "betty-style.pl") and [betty-doc.pl](https://github.com/holbertonschool/Betty/blob/master/betty-doc.pl "betty-doc.pl")
+-   Your code should use the `Betty` style. It will be checked using [betty-style.pl](https://github.com/holbertonschool/Betty/blob/main/betty-style.pl "betty-style.pl") and [betty-doc.pl](https://github.com/holbertonschool/Betty/blob/main/betty-doc.pl "betty-doc.pl")
 -   Your shell should not have any memory leaks
 -   No more than 5 functions per file
 -   All your header files should be include guarded
--   Use system calls only when you need to ([why?](https://alx-intranet.hbtn.io/rltoken/EU7B1PTSy14INnZEShpobQ "why?"))
+-   Use system calls only when you need to ([why?](https://intranet.hbtn.io/rltoken/rp53OodD6JzhS5Cv4DHkxQ))
 
 ### GitHub
 
@@ -193,7 +193,7 @@ mandatory
 
 -   Write a `README`
 -   Write a `man` for your shell.
--   You should have an `AUTHORS` file at the root of your repository, listing all individuals having contributed content to the repository. Format, see [Docker](https://alx-intranet.hbtn.io/rltoken/UL8J3kgl7HBK_Z9iBL3JFg "Docker")
+-   You should have an `AUTHORS` file at the root of your repository, listing all individuals having contributed content to the repository. Format, see [Docker](https://intranet.hbtn.io/rltoken/OkJnESwrC-LyYFtCyn7Axg)
 
 **Repo:**
 
