@@ -72,7 +72,7 @@ void exec_cmd(char **args)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("hsh");
+		perror("hsh: Error");
 		free(command);
 		return;
 	}
@@ -80,7 +80,7 @@ void exec_cmd(char **args)
 	{
 		if (execve(command, args, environ) == -1)
 		{
-			perror("hsh");
+			perror("hsh: Error");
 			free(command);
 			return;
 		}
