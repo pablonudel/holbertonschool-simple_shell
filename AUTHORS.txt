@@ -1,0 +1,3 @@
+# This file lists individuals having contributed content to the repository 
+Pablo Nudel <nudelpabloo@gmail.com>
+Dan Ishimwe <danishhhh@gmail.com>
