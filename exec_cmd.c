@@ -51,26 +51,27 @@ char *get_cmd(char *arg, int *error)
  * exec_cmd - Executes an external command
  *
  * @args: Array of arguments
- * @int_PID: internal PID
+ * @exec_count: command execution counter
  * @prog_name: program name
  *
  * Return: void
  */
-void exec_cmd(char **args, int int_PID, char *prog_name)
+void exec_cmd(char **args, int *exec_count, char *prog_name)
 {
 	char *command;
 	pid_t pid;
 	int status, error;
 
+	*exec_count += 1;
 	command = get_cmd(args[0], &error);
 	if (!command)
 	{
 		if (error)
 			fprintf(stderr, "%s: %d: %s: permission denied\n",
-					prog_name, int_PID, args[0]);
+					prog_name, *exec_count, args[0]);
 		else
 			fprintf(stderr, "%s: %d: %s: not found\n",
-					prog_name, int_PID, args[0]);
+					prog_name, *exec_count, args[0]);
 		return;
 	}
 

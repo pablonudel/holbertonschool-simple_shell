@@ -5,14 +5,18 @@
  *
  * @input: User input string
  * @args: Array of arguments
+ * @exec_count: command execution counter
+ * @prog_name: program name
  *
  * Return: void
  */
-void builtin_exit(char *input, char **args)
+void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
 {
+	*exec_count += 1;
 	if (args[1] != NULL)
 	{
-		fprintf(stderr, "exit: too many arguments\n");
+		fprintf(stderr, "%s: %d: %s: too many arguments\n",
+				prog_name, *exec_count, args[0]);
 		return;
 	}
 	free(input);
@@ -24,13 +28,15 @@ void builtin_exit(char *input, char **args)
  * builtin_env - Prints the current environment variables
  *
  * @args: The array of arguments
+ * @exec_count: command execution counter
  *
  * Return: void
  */
-void builtin_env(char **args)
+void builtin_env(char **args, int *exec_count)
 {
 	char **env = environ;
 
+	*exec_count += 1;
 	if (args[1])
 	{
 		fprintf(stderr, "%s: invalid option -- '%s'\n", args[0], args[1]);

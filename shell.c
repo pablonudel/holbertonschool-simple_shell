@@ -11,7 +11,7 @@
 int main(int argc __attribute__((unused)), char **argv)
 {
 	char *input, **args;
-	int int_PID = 0;
+	int exec_count = 0;
 
 	signal(SIGINT, handle_signint);
 	while (1)
@@ -30,21 +30,14 @@ int main(int argc __attribute__((unused)), char **argv)
 			continue;
 
 		if (strcmp(args[0], "exit") == 0)
-			builtin_exit(input, args);
+			builtin_exit(input, args, &exec_count, argv[0]);
 		else if (strcmp(args[0], "env") == 0)
-		{
-			int_PID++;
-			builtin_env(args);
-		}
+			builtin_env(args, &exec_count);
 		else
-		{
-			int_PID++;
-			exec_cmd(args, int_PID, argv[0]);
-		}
+			exec_cmd(args, &exec_count, argv[0]);
 
 		free_array(args);
 		free(input);
 	}
-	int_PID = 0;
 	return (0);
 }
