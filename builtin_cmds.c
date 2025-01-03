@@ -10,6 +10,11 @@
  */
 void builtin_exit(char *input, char **args)
 {
+	if (args[1] != NULL)
+	{
+		fprintf(stderr, "exit: too many arguments\n");
+		return;
+	}
 	free(input);
 	free_array(args);
 	exit(EXIT_SUCCESS);
