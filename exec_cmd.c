@@ -15,31 +15,28 @@ char *get_cmd(char *arg)
 	if (!path)
 		return (NULL);
 	if (access(arg, X_OK) == 0)
-	{
-		full_path = strdup(arg);
-		if (!full_path)
-			return (NULL);
-		return (full_path);
-	}
+		return (strdup(arg));
 	tmp_path = strdup(path);
 	if (!tmp_path)
 		return (NULL);
+
 	token = strtok(tmp_path, ":");
 	while (token)
 	{
 		full_path = malloc(strlen(token) + strlen(arg) + 2);
 		if (!full_path)
+			break;
+
+		sprintf(full_path, "%s/%s", token, arg);
+		if (stat(full_path, &st) == 0)
 		{
-			free(tmp_path);
-			return (NULL);
-		}
-		strcpy(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, arg);
-		if (stat(full_path, &st) == 0 && access(full_path, X_OK) == 0)
-		{
-			free(tmp_path);
-			return (full_path);
+			if (access(full_path, X_OK) != 0)
+				fprintf(stderr, "hsh: %s: permission denied\n", arg);
+			else
+			{
+				free(tmp_path);
+				return (full_path);
+			}
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
@@ -51,7 +48,6 @@ char *get_cmd(char *arg)
 /**
  * exec_cmd - Executes an external command
  *
- * @input: User input string
  * @args: Array of arguments
  *
  * Return: void
