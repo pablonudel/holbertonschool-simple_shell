@@ -13,6 +13,7 @@
 extern char **environ;
 
 void prompt(void);
+void handle_signint(int sig);
 char *get_input(void);
 char **split_input(char *input);
 char *_getenv(const char *env_var);

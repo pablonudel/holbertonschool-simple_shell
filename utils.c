@@ -12,6 +12,19 @@ void prompt(void)
 }
 
 /**
+ * handle_signint - Signal handler for SIGINT.
+ *
+ * @sig: The signal number received.
+ *
+ * Return: void
+ */
+void handle_signint(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\nsimple_shell:~$ ", 17);
+}
+
+/**
  * _getenv - Get the value of an environment variable
  *
  * @env_var: The environment variable

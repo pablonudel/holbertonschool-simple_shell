@@ -13,6 +13,7 @@ int main(int argc __attribute__((unused)), char **argv)
 	char *input, **args;
 	int int_PID = 0;
 
+	signal(SIGINT, handle_signint);
 	while (1)
 	{
 		prompt();
