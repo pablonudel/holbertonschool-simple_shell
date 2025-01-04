@@ -12,13 +12,7 @@
  */
 void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
 {
-	if (!input || !args || !prog_name)
-	{
-		*exec_count += 1;
-		perror("Error");
-		return;
-	}
-	if (args[1] != NULL)
+	if (args[1])
 	{
 		*exec_count += 1;
 		fprintf(stderr, "%s: %d: %s: Invalid argument: %s\n",
