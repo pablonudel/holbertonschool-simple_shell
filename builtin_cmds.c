@@ -15,8 +15,8 @@ void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
 	*exec_count += 1;
 	if (args[1] != NULL)
 	{
-		fprintf(stderr, "%s: %d: %s: too many arguments\n",
-				prog_name, *exec_count, args[0]);
+		fprintf(stderr, "%s: %d: %s: Illegal number: %s\n",
+				prog_name, *exec_count, args[0], args[1]);
 		return;
 	}
 	free(input);
