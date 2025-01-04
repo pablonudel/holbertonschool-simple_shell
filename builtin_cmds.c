@@ -10,15 +10,17 @@
  *
  * Return: void
  */
-void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
+void builtin_exit(char *input, char **args, int *exec_count)
 {
 	*exec_count += 1;
+	/*
 	if (args[1] != NULL)
 	{
 		fprintf(stderr, "%s: %d: %s: too many arguments\n",
 				prog_name, *exec_count, args[0]);
 		return;
 	}
+	*/
 	free(input);
 	free_array(args);
 	exit(EXIT_SUCCESS);
