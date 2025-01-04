@@ -30,7 +30,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			continue;
 
 		if (strcmp(args[0], "exit") == 0)
-			builtin_exit(input, args, &exec_count);
+			builtin_exit(input, args, &exec_count, argv[0]);
 		else if (strcmp(args[0], "env") == 0)
 			builtin_env(args, &exec_count);
 		else

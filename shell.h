@@ -20,7 +20,7 @@ char *_getenv(const char *env_var);
 void free_array(char **array);
 char *get_cmd(char *arg, int *error);
 void exec_cmd(char **args, int *exec_count, char *prog_name);
-void builtin_exit(char *input, char **args, int *exec_count);
+void builtin_exit(char *input, char **args, int *exec_count, char *prog_name);
 void builtin_env(char **args, int *exec_count);
 
 #endif
