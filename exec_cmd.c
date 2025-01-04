@@ -12,17 +12,12 @@ char *get_cmd(char *arg, int *error)
 {
 	char *path = _getenv("PATH"), *tmp_path, *token, *full_path;
 	struct stat st;
-
 	*error = 0;
+
 	if (!path)
 		return (NULL);
-
-	if (stat(arg, &st) == 0 && S_ISREG(st.st_mode))
-	{
-		if (access(arg, X_OK) != 0)
-			*error = 1;
-		return (access(arg, X_OK) == 0 ? strdup(arg) : NULL);
-	}
+	if (access(arg, X_OK) == 0)
+		return (strdup(arg));
 	tmp_path = strdup(path);
 	if (!tmp_path)
 		return (NULL);
@@ -35,10 +30,15 @@ char *get_cmd(char *arg, int *error)
 			break;
 
 		sprintf(full_path, "%s/%s", token, arg);
-		if (stat(full_path, &st) == 0 && access(full_path, X_OK) != 0)
+		if (stat(full_path, &st) == 0)
 		{
-			free(tmp_path);
-			return (full_path);
+			if (access(full_path, X_OK) != 0)
+				*error = 1;
+			else
+			{
+				free(tmp_path);
+				return (full_path);
+			}
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
@@ -67,7 +67,7 @@ void exec_cmd(char **args, int *exec_count, char *prog_name)
 	if (!command)
 	{
 		if (error)
-			fprintf(stderr, "%s: %d: %s: Permission denied\n",
+			fprintf(stderr, "%s: %d: %s: permission denied\n",
 					prog_name, *exec_count, args[0]);
 		else
 			fprintf(stderr, "%s: %d: %s: not found\n",
@@ -88,7 +88,7 @@ void exec_cmd(char **args, int *exec_count, char *prog_name)
 		{
 			perror("hsh: Error");
 			free(command);
-			exit(1);
+			return;
 		}
 	}
 	else
