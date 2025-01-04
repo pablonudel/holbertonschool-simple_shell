@@ -12,6 +12,12 @@
  */
 void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
 {
+	if (!input || !args || !prog_name)
+	{
+		*exec_count += 1;
+		perror("Error");
+		return;
+	}
 	if (args[1] != NULL)
 	{
 		*exec_count += 1;
