@@ -14,20 +14,23 @@ int main(int argc __attribute__((unused)), char **argv)
 	int exec_count = 0;
 
 	signal(SIGINT, handle_signint);
+	signal(SIGQUIT, SIG_IGN);
+
 	while (1)
 	{
 		prompt();
 		input = get_input();
 		args = split_input(input);
 
-		if (!args)
+		if (!args || !args[0])
 		{
-			free(input);
+			if (!args)
+			{
+				free(input);
+				perror("hsh: Error allocating memory");
+			}
 			continue;
 		}
-
-		if (!args[0])
-			continue;
 
 		if (strcmp(args[0], "exit") == 0)
 			builtin_exit(input, args, &exec_count, argv[0]);
@@ -36,8 +39,8 @@ int main(int argc __attribute__((unused)), char **argv)
 		else
 			exec_cmd(args, &exec_count, argv[0]);
 
-		free_array(args);
 		free(input);
+		free_array(args);
 	}
 	return (0);
 }
