@@ -5,18 +5,16 @@
  *
  * @input: User input string
  * @args: Array of arguments
- * @exec_count: command execution counter
  * @prog_name: program name
  *
  * Return: void
  */
-void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
+void builtin_exit(char *input, char **args, char *prog_name)
 {
 	if (args[1])
 	{
-		*exec_count += 1;
-		fprintf(stderr, "%s: %d: %s: Invalid argument: %s\n",
-				prog_name, *exec_count, args[0], args[1]);
+		fprintf(stderr, "%s: Invalid argument: %s\n",
+				prog_name, args[1]);
 		return;
 	}
 	free(input);
@@ -28,18 +26,16 @@ void builtin_exit(char *input, char **args, int *exec_count, char *prog_name)
  * builtin_env - Prints the current environment variables
  *
  * @args: The array of arguments
- * @exec_count: command execution counter
  *
  * Return: void
  */
-void builtin_env(char **args, int *exec_count)
+void builtin_env(char **args, char *prog_name)
 {
 	char **env = environ;
 
-	*exec_count += 1;
 	if (args[1])
 	{
-		fprintf(stderr, "%s: invalid option -- '%s'\n", args[0], args[1]);
+		fprintf(stderr, "%s: invalid option -- '%s'\n", prog_name, args[1]);
 		return;
 	}
 

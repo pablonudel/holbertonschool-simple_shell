@@ -45,31 +45,29 @@ char *get_cmd(char *arg)
  * exec_cmd - Executes an external command
  *
  * @args: Array of arguments
- * @exec_count: command execution counter
  * @prog_name: program name
  *
  * Return: void
  */
-void exec_cmd(char **args, int *exec_count, char *prog_name)
+void exec_cmd(char **args, char *prog_name)
 {
 	char *command, **env = environ;
 	pid_t pid;
 	int status;
 
-	*exec_count += 1;
 	command = get_cmd(args[0]);
 	if (!command)
 	{
-		fprintf(stderr, "%s: %d: %s: %s\n",
-				prog_name, *exec_count, args[0], strerror(errno));
+		fprintf(stderr, "%s: %s\n",
+				prog_name, strerror(errno));
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "%s: %d: fork: %s\n",
-				prog_name, *exec_count, strerror(errno));
+		fprintf(stderr, "%s: %s\n",
+				prog_name, strerror(errno));
 		free(command);
 		return;
 	}
@@ -77,8 +75,8 @@ void exec_cmd(char **args, int *exec_count, char *prog_name)
 	{
 		if (execve(command, args, env) == -1)
 		{
-			fprintf(stderr, "%s: %d: %s: %s\n",
-					prog_name, *exec_count, command, strerror(errno));
+			fprintf(stderr, "%s: %s\n",
+					prog_name, strerror(errno));
 			free(command);
 			return;
 		}

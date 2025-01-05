@@ -11,7 +11,6 @@
 int main(int argc __attribute__((unused)), char **argv)
 {
 	char *input, **args;
-	int exec_count = 0;
 
 	signal(SIGINT, handle_signint);
 	signal(SIGQUIT, SIG_IGN);
@@ -27,17 +26,17 @@ int main(int argc __attribute__((unused)), char **argv)
 			if (!args)
 			{
 				free(input);
-				perror("hsh: Error allocating memory");
+				fprintf(stderr, "%s: Error allocating memory\n", argv[0]);
 			}
 			continue;
 		}
 
 		if (strcmp(args[0], "exit") == 0)
-			builtin_exit(input, args, &exec_count, argv[0]);
+			builtin_exit(input, args, argv[0]);
 		else if (strcmp(args[0], "env") == 0)
-			builtin_env(args, &exec_count);
+			builtin_env(args, argv[0]);
 		else
-			exec_cmd(args, &exec_count, argv[0]);
+			exec_cmd(args, argv[0]);
 
 		free(input);
 		free_array(args);
