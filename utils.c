@@ -8,7 +8,7 @@
 void prompt(void)
 {
 	if (isatty(STDIN_FILENO) == 1)
-		write(1, "simple_shell:~$ ", 16);
+		printf("simple_shell:~$ ");
 }
 
 /**
@@ -21,7 +21,8 @@ void prompt(void)
 void handle_signint(int sig)
 {
 	(void)sig;
-	write(STDOUT_FILENO, "\nsimple_shell:~$ ", 17);
+	printf("\n");
+	prompt();
 }
 
 /**
