@@ -4,24 +4,23 @@
  * get_cmd - Finds the full path of a command
  *
  * @arg: The command name
- * @error: error status
  *
  * Return: Full path of the command or NULL if not found
  */
-char *get_cmd(char *arg, int *error)
+char *get_cmd(char *arg)
 {
 	char *path = _getenv("PATH"), *tmp_path, *token, *full_path;
 	struct stat st;
-	*error = 0;
 
-	if (!path)
+	if (strchr(arg, '/'))
+	{
+		if (stat(arg, &st) == 0 && access(arg, X_OK) == 0)
+			return (strdup(arg));
 		return (NULL);
-	if (access(arg, X_OK) == 0)
-		return (strdup(arg));
+	}
 	tmp_path = strdup(path);
 	if (!tmp_path)
 		return (NULL);
-
 	token = strtok(tmp_path, ":");
 	while (token)
 	{
@@ -30,15 +29,10 @@ char *get_cmd(char *arg, int *error)
 			break;
 
 		sprintf(full_path, "%s/%s", token, arg);
-		if (stat(full_path, &st) == 0)
+		if (stat(full_path, &st) == 0 && access(full_path, X_OK) == 0)
 		{
-			if (access(full_path, X_OK) != 0)
-				*error = 1;
-			else
-			{
-				free(tmp_path);
-				return (full_path);
-			}
+			free(tmp_path);
+			return (full_path);
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
@@ -58,35 +52,33 @@ char *get_cmd(char *arg, int *error)
  */
 void exec_cmd(char **args, int *exec_count, char *prog_name)
 {
-	char *command;
+	char *command, **env = environ;
 	pid_t pid;
-	int status, error;
+	int status;
 
 	*exec_count += 1;
-	command = get_cmd(args[0], &error);
+	command = get_cmd(args[0]);
 	if (!command)
 	{
-		if (error)
-			fprintf(stderr, "%s: %d: %s: permission denied\n",
-					prog_name, *exec_count, args[0]);
-		else
-			fprintf(stderr, "%s: %d: %s: not found\n",
-					prog_name, *exec_count, args[0]);
+		fprintf(stderr, "%s: %d: %s: %s\n",
+				prog_name, *exec_count, args[0], strerror(errno));
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("hsh: Error");
+		fprintf(stderr, "%s: %d: fork: %s\n",
+				prog_name, *exec_count, strerror(errno));
 		free(command);
 		return;
 	}
 	if (pid == 0)
 	{
-		if (execve(command, args, environ) == -1)
+		if (execve(command, args, env) == -1)
 		{
-			perror("hsh: Error");
+			fprintf(stderr, "%s: %d: %s: %s\n",
+					prog_name, *exec_count, command, strerror(errno));
 			free(command);
 			return;
 		}
