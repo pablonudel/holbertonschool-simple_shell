@@ -15,7 +15,12 @@ char *get_cmd(char *arg)
 	if (strchr(arg, '/'))
 	{
 		if (stat(arg, &st) == 0 && access(arg, X_OK) == 0)
-			return (strdup(arg));
+		{
+			full_path = strdup(arg);
+			if (!full_path)
+				return (NULL);
+			return (full_path);
+		}
 		return (NULL);
 	}
 	tmp_path = strdup(path);
