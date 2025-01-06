@@ -16,24 +16,10 @@ int main(void)
 	{
 		prompt();
 		input = get_input();
-		if (!input)
-		{
-			free(input);
-			fprintf(stderr, "./hsh: Error getting input\n");
-			exit(EXIT_FAILURE);
-		}
 		args = split_input(input);
 
-		if (!args || !args[0])
-		{
-			if (!args)
-			{
-				free(input);
-				fprintf(stderr, "./hsh: Error allocating memory\n");
-				exit(EXIT_FAILURE);
-			}
+		if (!args[0])
 			continue;
-		}
 
 		if (strncmp(args[0], "exit", 4) == 0)
 			builtin_exit(input, args);

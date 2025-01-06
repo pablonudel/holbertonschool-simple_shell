@@ -21,7 +21,11 @@ char *get_input(void)
 		exit(EXIT_SUCCESS);
 	}
 	if (n_chars == -1)
-		return (NULL);
+	{
+		free(input);
+		perror("./hsh");
+		exit(EXIT_FAILURE);
+	}
 
 	i = 0;
 	while (input[i] != '\0')
@@ -52,7 +56,10 @@ char **split_input(char *input)
 
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
-		return (NULL);
+	{
+		perror("./hsh");
+		exit(EXIT_FAILURE);
+	}
 
 	token = strtok(input, " \t\n");
 	while (token)
@@ -61,7 +68,8 @@ char **split_input(char *input)
 		if (!tokens[i])
 		{
 			free_array(tokens);
-			return (NULL);
+			perror("./hsh");
+			exit(EXIT_FAILURE);
 		}
 		token = strtok(NULL, " \t\n");
 		i++;
