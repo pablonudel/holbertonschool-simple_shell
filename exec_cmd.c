@@ -73,8 +73,6 @@ void exec_cmd(char **args, char *prog_name)
 	{
 		fprintf(stderr, "%s: %s\n",
 				prog_name, strerror(errno));
-		free(command);
-		return;
 	}
 	if (pid == 0)
 	{
@@ -82,8 +80,6 @@ void exec_cmd(char **args, char *prog_name)
 		{
 			fprintf(stderr, "%s: %s\n",
 					prog_name, strerror(errno));
-			free(command);
-			return;
 		}
 	}
 	else
