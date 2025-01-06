@@ -36,27 +36,14 @@ void handle_signint(int sig)
  */
 char *_getenv(const char *env_var)
 {
-	char *key;
-	char *value;
+	size_t len = strlen(env_var);
 	char **env = environ;
 
 	while (*env)
 	{
-		key = *env;
-		value = strchr(key, '=');
+		if (strncmp(*env, env_var, len) == 0 && (*env)[len] == '=')
+			return (*env + len + 1);
 
-		if (value)
-		{
-			*value = '\0';
-
-			if (strncmp(env_var, key, strlen(key)) == 0)
-			{
-				*value = '=';
-				return (value + 1);
-			}
-
-			*value = '=';
-		}
 		env++;
 	}
 	return (NULL);
