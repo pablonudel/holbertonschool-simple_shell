@@ -10,12 +10,6 @@
  */
 void builtin_exit(char *input, char **args)
 {
-	if (args[1])
-	{
-		fprintf(stderr, "./hsh: Invalid argument: %s\n",
-				args[1]);
-		return;
-	}
 	free(input);
 	free_array(args);
 	exit(EXIT_SUCCESS);
