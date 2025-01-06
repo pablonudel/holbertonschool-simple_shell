@@ -14,13 +14,10 @@ char *get_cmd(char *arg)
 
 	if (strchr(arg, '/'))
 	{
-		if (stat(arg, &st) == 0 && access(arg, X_OK) == 0)
-		{
-			full_path = strdup(arg);
-			if (!full_path)
-				return (NULL);
-			return (full_path);
-		}
+		if (stat(arg, &st) == 0 &&
+				access(arg, X_OK) == 0 && !S_ISDIR(st.st_mode))
+			return (strdup(arg));
+
 		return (NULL);
 	}
 	tmp_path = strdup(path);
@@ -62,26 +59,22 @@ void exec_cmd(char **args)
 	command = get_cmd(args[0]);
 	if (!command)
 	{
-		fprintf(stderr, "./hsh: %s\n",
-				strerror(errno));
+		fprintf(stderr, "./hsh: %s\n", strerror(errno));
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "./hsh: %s\n",
-				strerror(errno));
+		fprintf(stderr, "./hsh: %s\n", strerror(errno));
 	}
 	if (pid == 0)
 	{
 		if (execve(command, args, env) == -1)
-		{
-			fprintf(stderr, ".hsh: %s\n",
-					strerror(errno));
-		}
+			fprintf(stderr, ".hsh: %s\n", strerror(errno));
 	}
 	else
 		wait(&status);
+
 	free(command);
 }
