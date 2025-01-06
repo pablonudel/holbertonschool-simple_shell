@@ -10,6 +10,7 @@ char *get_input(void)
 	char *input = NULL;
 	size_t input_size = 0;
 	ssize_t n_chars;
+	int i;
 
 	n_chars = getline(&input, &input_size, stdin);
 	if (n_chars == EOF)
@@ -26,7 +27,16 @@ char *get_input(void)
 		exit(EXIT_FAILURE);
 	}
 
-	input[strcspn(input, "\n")] = '\0';
+	i = 0;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '\n')
+		{
+			input[i] = '\0';
+			break;
+		}
+		i++;
+	}
 
 	return (input);
 }

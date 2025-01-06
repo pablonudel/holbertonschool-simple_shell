@@ -50,7 +50,7 @@ char *_getenv(const char *env_var)
 		{
 			*value = '\0';
 
-			if (strcmp(env_var, key) == 0)
+			if (strncmp(env_var, key, strlen(key)) == 0)
 			{
 				*value = '=';
 				return (value + 1);
