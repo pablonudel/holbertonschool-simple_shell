@@ -27,6 +27,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			{
 				free(input);
 				fprintf(stderr, "%s: Error allocating memory\n", argv[0]);
+				exit(EXIT_FAILURE);
 			}
 			continue;
 		}
