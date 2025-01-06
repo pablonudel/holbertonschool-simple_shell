@@ -19,6 +19,12 @@ int main(int argc __attribute__((unused)), char **argv)
 	{
 		prompt();
 		input = get_input();
+		if (!input)
+		{
+			free(input);
+			fprintf(stderr, "%s: Error getting input\n", argv[0]);
+			exit(EXIT_FAILURE);
+		}
 		args = split_input(input);
 
 		if (!args || !args[0])
@@ -32,9 +38,9 @@ int main(int argc __attribute__((unused)), char **argv)
 			continue;
 		}
 
-		if (strcmp(args[0], "exit") == 0)
+		if (strncmp(args[0], "exit", 4) == 0)
 			builtin_exit(input, args, argv[0]);
-		else if (strcmp(args[0], "env") == 0)
+		else if (strncmp(args[0], "env", 3) == 0)
 			builtin_env(args, argv[0]);
 		else
 			exec_cmd(args, argv[0]);

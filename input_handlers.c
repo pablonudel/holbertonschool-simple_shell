@@ -21,11 +21,7 @@ char *get_input(void)
 		exit(EXIT_SUCCESS);
 	}
 	if (n_chars == -1)
-	{
-		perror("hsh: Error");
-		free(input);
-		exit(EXIT_FAILURE);
-	}
+		return (NULL);
 
 	i = 0;
 	while (input[i] != '\0')
