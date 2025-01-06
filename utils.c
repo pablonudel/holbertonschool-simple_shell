@@ -24,8 +24,7 @@ void prompt(void)
 void handle_signint(int sig)
 {
 	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-	prompt();
+	write(STDOUT_FILENO, "\nsimple_shell:~$ ", 17);
 }
 
 /**
@@ -72,9 +71,13 @@ char *_getenv(const char *env_var)
  */
 void free_array(char **array)
 {
-	int i;
+	int i = 0;
 
-	for (i = 0; array[i]; i++)
+	while (array[i])
+	{
 		free(array[i]);
+		i++;
+	}
+
 	free(array);
 }

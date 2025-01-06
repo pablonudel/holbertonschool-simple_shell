@@ -9,34 +9,42 @@
  */
 char *get_cmd(char *arg)
 {
-	char *path = _getenv("PATH"), *tmp_path, *token, *full_path;
+	char *path, *tmp_path, *token, full_path[1024];
 	struct stat st;
 
 	if (strchr(arg, '/'))
 	{
-		if (stat(arg, &st) == 0 &&
-				access(arg, X_OK) == 0 && !S_ISDIR(st.st_mode))
-			return (strdup(arg));
-
+		if (stat(arg, &st) == 0)
+		{
+			if (S_ISDIR(st.st_mode))
+				errno = EISDIR;
+			else if (access(arg, X_OK) != 0)
+				errno = EACCES;
+			else
+				return (strdup(arg));
+		}
+		else
+		{
+			errno = ENOENT;
+		}
 		return (NULL);
 	}
-	tmp_path = strdup(path);
-	if (!tmp_path)
+
+	path = _getenv("PATH");
+	if (!path)
 		return (NULL);
+
+	tmp_path = strdup(path);
 	token = strtok(tmp_path, ":");
+
 	while (token)
 	{
-		full_path = malloc(strlen(token) + strlen(arg) + 2);
-		if (!full_path)
-			break;
-
 		sprintf(full_path, "%s/%s", token, arg);
 		if (stat(full_path, &st) == 0 && access(full_path, X_OK) == 0)
 		{
 			free(tmp_path);
-			return (full_path);
+			return (strdup(full_path));
 		}
-		free(full_path);
 		token = strtok(NULL, ":");
 	}
 	free(tmp_path);
@@ -50,12 +58,11 @@ char *get_cmd(char *arg)
  *
  * Return: void
  */
-void exec_cmd(char **args)
+void exec_command(char **args)
 {
-	char *command;
+	char *command = get_cmd(args[0]);
 	pid_t pid;
 
-	command = get_cmd(args[0]);
 	if (!command)
 	{
 		perror("./hsh");
@@ -68,7 +75,7 @@ void exec_cmd(char **args)
 		perror("./hsh");
 		exit(EXIT_FAILURE);
 	}
-	if (pid == 0)
+	else if (pid == 0)
 	{
 		if (execve(command, args, environ) == -1)
 		{
