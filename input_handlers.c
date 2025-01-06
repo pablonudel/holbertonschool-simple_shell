@@ -50,9 +50,6 @@ char **split_input(char *input)
 	char *token;
 	int i = 0;
 
-	if (!input)
-		return (NULL);
-
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 		return (NULL);
