@@ -5,16 +5,15 @@
  *
  * @input: User input string
  * @args: Array of arguments
- * @prog_name: program name
  *
  * Return: void
  */
-void builtin_exit(char *input, char **args, char *prog_name)
+void builtin_exit(char *input, char **args)
 {
 	if (args[1])
 	{
-		fprintf(stderr, "%s: Invalid argument: %s\n",
-				prog_name, args[1]);
+		fprintf(stderr, "./hsh: Invalid argument: %s\n",
+				args[1]);
 		return;
 	}
 	free(input);
@@ -29,13 +28,13 @@ void builtin_exit(char *input, char **args, char *prog_name)
  *
  * Return: void
  */
-void builtin_env(char **args, char *prog_name)
+void builtin_env(char **args)
 {
 	char **env = environ;
 
 	if (args[1])
 	{
-		fprintf(stderr, "%s: invalid option -- '%s'\n", prog_name, args[1]);
+		fprintf(stderr, "./hsh: invalid option -- '%s'\n", args[1]);
 		return;
 	}
 

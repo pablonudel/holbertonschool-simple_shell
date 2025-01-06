@@ -3,12 +3,9 @@
 /**
  * main - Entry point of the simple shell
  *
- * @argc: number of arguments
- * @argv: array of arguments
- *
  * Return: Always 0.
  */
-int main(int argc __attribute__((unused)), char **argv)
+int main(void)
 {
 	char *input, **args;
 
@@ -22,7 +19,7 @@ int main(int argc __attribute__((unused)), char **argv)
 		if (!input)
 		{
 			free(input);
-			fprintf(stderr, "%s: Error getting input\n", argv[0]);
+			fprintf(stderr, "./hsh: Error getting input\n");
 			exit(EXIT_FAILURE);
 		}
 		args = split_input(input);
@@ -32,18 +29,18 @@ int main(int argc __attribute__((unused)), char **argv)
 			if (!args)
 			{
 				free(input);
-				fprintf(stderr, "%s: Error allocating memory\n", argv[0]);
+				fprintf(stderr, "./hsh: Error allocating memory\n");
 				exit(EXIT_FAILURE);
 			}
 			continue;
 		}
 
 		if (strncmp(args[0], "exit", 4) == 0)
-			builtin_exit(input, args, argv[0]);
+			builtin_exit(input, args);
 		else if (strncmp(args[0], "env", 3) == 0)
-			builtin_env(args, argv[0]);
+			builtin_env(args);
 		else
-			exec_cmd(args, argv[0]);
+			exec_cmd(args);
 
 		free(input);
 		free_array(args);

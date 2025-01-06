@@ -50,11 +50,10 @@ char *get_cmd(char *arg)
  * exec_cmd - Executes an external command
  *
  * @args: Array of arguments
- * @prog_name: program name
  *
  * Return: void
  */
-void exec_cmd(char **args, char *prog_name)
+void exec_cmd(char **args)
 {
 	char *command, **env = environ;
 	pid_t pid;
@@ -63,23 +62,23 @@ void exec_cmd(char **args, char *prog_name)
 	command = get_cmd(args[0]);
 	if (!command)
 	{
-		fprintf(stderr, "%s: %s\n",
-				prog_name, strerror(errno));
+		fprintf(stderr, "./hsh: %s\n",
+				strerror(errno));
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "%s: %s\n",
-				prog_name, strerror(errno));
+		fprintf(stderr, "./hsh: %s\n",
+				strerror(errno));
 	}
 	if (pid == 0)
 	{
 		if (execve(command, args, env) == -1)
 		{
-			fprintf(stderr, "%s: %s\n",
-					prog_name, strerror(errno));
+			fprintf(stderr, ".hsh: %s\n",
+					strerror(errno));
 		}
 	}
 	else
