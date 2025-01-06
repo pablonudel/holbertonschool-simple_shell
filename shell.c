@@ -10,7 +10,6 @@ int main(void)
 	char *input, **args;
 
 	signal(SIGINT, handle_signint);
-	signal(SIGQUIT, SIG_IGN);
 
 	while (1)
 	{

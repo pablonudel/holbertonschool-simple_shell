@@ -52,29 +52,36 @@ char *get_cmd(char *arg)
  */
 void exec_cmd(char **args)
 {
-	char *command, **env = environ;
+	char *command;
 	pid_t pid;
-	int status;
 
 	command = get_cmd(args[0]);
 	if (!command)
 	{
-		fprintf(stderr, "./hsh: %s\n", strerror(errno));
+		perror("./hsh");
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "./hsh: %s\n", strerror(errno));
+		perror("./hsh");
+		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
-		if (execve(command, args, env) == -1)
-			fprintf(stderr, ".hsh: %s\n", strerror(errno));
+		if (execve(command, args, environ) == -1)
+		{
+			perror("./hsh");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
-		wait(&status);
+	{
+		int status;
+
+		waitpid(pid, &status, 0);
+	}
 
 	free(command);
 }
