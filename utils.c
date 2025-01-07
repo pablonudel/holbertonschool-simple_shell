@@ -39,13 +39,6 @@ char *_getenv(const char *env_var)
 	size_t len = strlen(env_var);
 	char **env = environ;
 
-	if (!environ)
-	{
-		errno = ENOENT;
-		perror("./hsh");
-        	exit(EXIT_FAILURE);
-	}
-
 	while (*env)
 	{
 		if (strncmp(*env, env_var, len) == 0 && (*env)[len] == '=')
