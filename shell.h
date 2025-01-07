@@ -19,6 +19,7 @@ char *get_input(void);
 char **split_input(char *input);
 char *_getenv(const char *env_var);
 void free_array(char **array);
+int check_cmd(char *arg);
 char *get_cmd(char *arg);
 void exec_command(char **args);
 void builtin_exit(char *input, char **args);
