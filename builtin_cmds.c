@@ -10,9 +10,24 @@
  */
 void builtin_exit(char *input, char **args)
 {
+	int exit_status = 0;
+
+	if (args[1])
+	{
+		char *endptr;
+
+		exit_status = strtol(args[1], &endptr, 10);
+
+		if (*endptr != '\0')
+		{
+			fprintf(stderr, "./hsh: Illegal number: %s\n", args[1]);
+			return;
+		}
+	}	
+
 	free(input);
 	free_array(args);
-	exit(EXIT_SUCCESS);
+	exit(exit_status);
 }
 
 /**
