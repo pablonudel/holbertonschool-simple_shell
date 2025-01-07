@@ -18,7 +18,7 @@ char *get_input(void)
 		free(input);
 		if (isatty(STDIN_FILENO))
 			putchar('\n');
-		exit(EXIT_SUCCESS);
+		return (NULL);
 	}
 	if (n_chars == -1)
 	{
@@ -53,6 +53,9 @@ char **split_input(char *input)
 	char **tokens;
 	char *token;
 	int i = 0;
+
+	if (!input || *input == '\0')
+		return (NULL);
 
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)

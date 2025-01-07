@@ -15,6 +15,8 @@ int main(void)
 	{
 		prompt();
 		input = get_input();
+		if (!input)
+			break;
 		args = split_input(input);
 
 		if (!args || !args[0])
