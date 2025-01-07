@@ -52,7 +52,7 @@ char *get_cmd(char *arg)
 }
 
 /**
- * exec_cmd - Executes an external command
+ * exec_command - Executes an external command
  *
  * @args: Array of arguments
  *
