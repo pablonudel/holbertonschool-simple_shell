@@ -25,6 +25,7 @@ void builtin_exit(char *input, char **args)
 		}
 	}	
 
+	signal(SIGINT, SIG_DFL);
 	free(input);
 	free_array(args);
 	exit(exit_status);
