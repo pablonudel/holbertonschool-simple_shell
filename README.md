@@ -70,15 +70,14 @@ $ exit
 
 ### 📑 Man page
 
-Man commande : `man ./man_3_shell`.
-
-![man Simple_Shell](https://ibb.co/2M0kzLc/Capture d'écran 2025-01-07-144359.png)
+Man commande : `man ./man_1_simple_shell`
+![man Simple_Shell](https://ibb.co/2M0kzLc)
 
 ### 🔖 Flowchart
 
 
-![Flowchart](https://ibb.co/Jp9vjS8/Simple_Shell.jpeg)
+![Flowchart](https://ibb.co/Jp9vjS8)
 ## Authors
 
-- Github : [@SoliraZ](https://github.com/pablonudel)
+- Github : [@pablonudel](https://github.com/pablonudel)
 - Github : [@danish872](https://github.com/danish872)
