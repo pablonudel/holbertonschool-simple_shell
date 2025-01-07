@@ -71,12 +71,12 @@ $ exit
 ### 📑 Man page
 
 Man commande : `man ./man_1_simple_shell`
-![man Simple_Shell](https://ibb.co/2M0kzLc)
+![man Simple_Shell](https://zupimages.net/viewer.php?id=25/02/8bul.png)
 
 ### 🔖 Flowchart
 
 
-![Flowchart](https://ibb.co/Jp9vjS8)
+![Flowchart](https://zupimages.net/viewer.php?id=25/02/v1fe.jpeg)
 ## Authors
 
 - Github : [@pablonudel](https://github.com/pablonudel)
