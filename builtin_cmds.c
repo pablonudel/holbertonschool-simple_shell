@@ -18,7 +18,7 @@ void builtin_exit(char *input, char **args)
 
 		exit_status = strtol(args[1], &endptr, 10);
 
-		if (*endptr != '\0')
+		if (*endptr || exit_status < 0)
 		{
 			fprintf(stderr, "./hsh: Illegal number: %s\n", args[1]);
 			return;
