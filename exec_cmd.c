@@ -1,35 +1,6 @@
 #include "shell.h"
 
 /**
- * check_cmd - check if command exist, is a directory
- * and has execute permision, and sets errno if not.
- *
- * @arg: The command name
- *
- * Return: 1 if true 0 if false
- */
-
-int check_cmd(char *arg)
-{
-	struct stat st;
-
-	if (stat(arg, &st) == 0)
-	{
-		if (S_ISDIR(st.st_mode))
-			errno = EISDIR;
-		else if (access(arg, X_OK) != 0)
-			errno = EACCES;
-		else
-			return (1);
-	}
-	else
-	{
-		errno = ENOENT;
-	}
-	return (0);
-}
-
-/**
  * get_cmd - Finds the full path of a command
  *
  * @arg: The command name
@@ -41,21 +12,27 @@ char *get_cmd(char *arg)
 	char *path, *tmp_path, *token, full_path[1024];
 	struct stat st;
 
-	path = _getenv("PATH");
-	if (!path)
-	{
-		errno = ENOENT;
-		perror("./hsh");
-		exit(EXIT_FAILURE);
-	}
-
 	if (strchr(arg, '/'))
 	{
-		if (check_cmd(arg) == 1)
-			return (strdup(arg));
-
+		if (stat(arg, &st) == 0)
+		{
+			if (S_ISDIR(st.st_mode))
+				errno = EISDIR;
+			else if (access(arg, X_OK) != 0)
+				errno = EACCES;
+			else
+				return (strdup(arg));
+		}
+		else
+		{
+			errno = ENOENT;
+		}
 		return (NULL);
 	}
+
+	path = _getenv("PATH");
+	if (!path)
+		return (NULL);
 
 	tmp_path = strdup(path);
 	token = strtok(tmp_path, ":");
@@ -75,7 +52,7 @@ char *get_cmd(char *arg)
 }
 
 /**
- * exec_command - Executes an external command
+ * exec_cmd - Executes an external command
  *
  * @args: Array of arguments
  *
