@@ -43,9 +43,11 @@ int main(int argc __attribute__((unused)), char **argv)
 		else
 			exec_command(&context);
 
-		free_array(context.args);
+		if (context.args)
+			free_array(context.args);
 		free(context.input);
 	}
-	free(context.buffer);
+	if (context.buffer)
+		free(context.buffer);
 	return (context.exit_code);
 }

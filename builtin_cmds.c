@@ -20,14 +20,18 @@ void builtin_exit(exec_context_t *context)
 		{
 			print_error(context, 2);
 			free_array(context->args);
+			context->args = NULL;
 			free(context->input);
+			context->input = NULL;
 			return;
 		}
 	}
 
 	signal(SIGINT, SIG_DFL);
 	free(context->input);
+	context->input = NULL;
 	free_array(context->args);
+	context->args = NULL;
 
 	if (context->buffer != NULL)
 	{

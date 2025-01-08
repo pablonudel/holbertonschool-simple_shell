@@ -60,13 +60,18 @@ void free_array(char **array)
 {
 	int i = 0;
 
+	if (!array)
+		return;
+
 	while (array[i])
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
 
 	free(array);
+	array = NULL;
 }
 
 /**
