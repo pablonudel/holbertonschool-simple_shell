@@ -12,15 +12,6 @@ void builtin_exit(exec_context_t *context)
 	char *endptr;
 
 	context->exec_count += 1;
-	if (context->args[2] != NULL)
-	{
-		print_error(context, 3);
-		free_array(context->args);
-		context->args = NULL;
-		free(context->input);
-		context->input = NULL;
-		return;
-	}
 	if (context->args[1])
 	{
 		context->exit_code = strtol(context->args[1], &endptr, 10);
