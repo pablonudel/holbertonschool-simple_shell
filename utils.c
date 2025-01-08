@@ -69,6 +69,14 @@ void free_array(char **array)
 	free(array);
 }
 
+/**
+ * print_error - print error according to exit codes
+ *
+ * @context: Pointer to the execution context containing data and state
+ * @code: exit code
+ *
+ * Return void
+ */
 void print_error(exec_context_t *context, int code)
 {
 	if (code == 127)
@@ -89,9 +97,9 @@ void print_error(exec_context_t *context, int code)
 	}
 	else
 	{
-		fprintf(stderr, "%s: %d: %s: %s\n",
+		fprintf(stderr, "%s: %d: %s: No such file or directory\n",
 				context->program_name, context->exec_count,
-				context->args[0], strerror(errno));
+				context->args[0]);
 	}
 
 	context->exit_code = code;
