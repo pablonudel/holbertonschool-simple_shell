@@ -3,39 +3,46 @@
 /**
  * main - Entry point of the simple shell
  *
+ * @argc: number of arguments (unused)
+ * @argv: array of arguments
+ *
  * Return: Always 0.
  */
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
-	char *input, **args;
+	exec_context_t context;
+
+	context.exec_count = 0;
+	context.program_name = argv[0];
+	context.exit_code = 0;
 
 	signal(SIGINT, handle_signint);
 
 	while (1)
 	{
 		prompt();
-		input = get_input();
-		if (!input)
+		context.input = get_input(&context);
+		if (!context.input)
 			break;
-		args = split_input(input);
+		context.args = split_input(&context);
 
-		if (!args || !args[0])
+		if (!context.args || !context.args[0])
 		{
-			free(input);
-			if (args)
-				free_array(args);
+			free(context.input);
+			if (context.args)
+				free_array(context.args);
 			continue;
 		}
 
-		if (strncmp(args[0], "exit", 4) == 0)
-			builtin_exit(input, args);
-		else if (strncmp(args[0], "env", 3) == 0)
-			builtin_env(args);
+		if (strncmp(context.args[0], "exit", 4) == 0)
+			builtin_exit(&context);
+		else if (strncmp(context.args[0], "env", 3) == 0)
+			builtin_env(&context);
 		else
-			exec_command(args);
+			exec_command(&context);
 
-		free_array(args);
-		free(input);
+		free_array(context.args);
+		free(context.input);
 	}
-	return (0);
+	return (context.exit_code);
 }

@@ -68,3 +68,31 @@ void free_array(char **array)
 
 	free(array);
 }
+
+void print_error(exec_context_t *context, int code)
+{
+	if (code == 127)
+	{
+		fprintf(stderr, "%s: %d: %s: not found\n",
+				context->program_name, context->exec_count, context->args[0]);
+	}
+	else if (code == 125)
+	{
+		fprintf(stderr, "%s: invalid option -- '%s'\n",
+				context->args[0], context->args[1]);
+	}
+	else if (code == 2)
+	{
+		fprintf(stderr, "%s: %d: %s: Illegal number: %s\n",
+				context->program_name, context->exec_count,
+				context->args[0], context->args[1]);
+	}
+	else
+	{
+		fprintf(stderr, "%s: %d: %s: %s\n",
+				context->program_name, context->exec_count,
+				context->args[0], strerror(errno));
+	}
+
+	context->exit_code = code;
+}

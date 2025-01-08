@@ -16,21 +16,18 @@ char *get_cmd(char *arg)
 	{
 		if (stat(arg, &st) == 0)
 		{
-			if (S_ISDIR(st.st_mode))
-				errno = EISDIR;
-			else if (access(arg, X_OK) != 0)
+			if (access(arg, X_OK) != 0)
 				errno = EACCES;
 			else
 				return (strdup(arg));
 		}
 		else
-		{
 			errno = ENOENT;
-		}
+
 		return (NULL);
 	}
-
 	path = _getenv("PATH");
+
 	if (!path)
 		return (NULL);
 
@@ -54,33 +51,37 @@ char *get_cmd(char *arg)
 /**
  * exec_command - Executes an external command
  *
- * @args: Array of arguments
+ * @context: Pointer to the execution context containing data and state
  *
  * Return: void
  */
-void exec_command(char **args)
+void exec_command(exec_context_t *context)
 {
-	char *command = get_cmd(args[0]);
+	char *command = get_cmd(context->args[0]);
 	pid_t pid;
 
+	context->exec_count += 1;
 	if (!command)
 	{
-		perror("./hsh");
+		if (errno == ENOENT)
+			print_error(context, 127);
+		else
+			print_error(context, 126);
 		return;
 	}
 
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("./hsh");
-		exit(EXIT_FAILURE);
+		print_error(context, 1);
+		exit(context->exit_code);
 	}
 	else if (pid == 0)
 	{
-		if (execve(command, args, environ) == -1)
+		if (execve(command, context->args, environ) == -1)
 		{
-			perror("./hsh");
-			exit(EXIT_FAILURE);
+			print_error(context, 1);
+			exit(context->exit_code);
 		}
 	}
 	else
