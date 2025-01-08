@@ -9,45 +9,42 @@
  */
 char *get_input(exec_context_t *context)
 {
-	static char *buffer = NULL;
-	static char *current = NULL;
+	static char *buffer = NULL, *current = NULL;
+	char *result;
 	size_t buffer_size = 0;
 	char *line, *end;
 
 	if (!current || !*current)
 	{
-		free(buffer);
-		buffer = NULL;
-		current = NULL;
+		free(buffer), buffer = NULL, current = NULL;
 		if (getline(&buffer, &buffer_size, stdin) == -1)
 		{
-			if (isatty(STDIN_FILENO))
-				putchar('\n');
-			free(buffer);
+			if (isatty(STDIN_FILENO)) putchar('\n');
+			free(buffer), buffer = NULL;
 			return (NULL);
 		}
 		current = buffer;
 	}
 
 	line = current;
-	while (*current && *current != '\n')
-		current++;
+	while (*current && *current != '\n') current++;
+	if (*current == '\n') *current++ = '\0';
 
-	if (*current == '\n')
-	{
-		*current = '\0';
-		current++;
-	}
-
-	while (*line == ' ' || *line == '\t')
-		line++;
-	for (end = line + strlen(line) - 1;
+	while (*line == ' ' || *line == '\t') line++;
+	for (end = line + strlen(line) - 1; 
 			end > line && (*end == ' ' || *end == '\t'); end--)
 		*end = '\0';
-	if (*line == '\0')
-		return (get_input(context));
 
-	return (strdup(line));
+	if (*line == '\0') return (current = NULL, get_input(context));
+
+	result = strdup(line);
+	if (!result)
+	{
+		print_error(context, 1);
+		free(buffer), buffer = NULL;
+		exit(context->exit_code);
+	}
+	return (result);
 }
 
 /**
