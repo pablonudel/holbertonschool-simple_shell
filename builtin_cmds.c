@@ -3,48 +3,47 @@
 /**
  * builtin_exit - Exits the shell
  *
- * @input: User input string
- * @args: Array of arguments
+ * @context: Pointer to the execution context containing data and state
  *
  * Return: void
  */
-void builtin_exit(char *input, char **args)
+void builtin_exit(exec_context_t *context)
 {
-	int exit_status = 0;
+	char *endptr;
 
-	if (args[1])
+	context->exec_count += 1;
+	if (context->args[1])
 	{
-		char *endptr;
+		context->exit_code = strtol(context->args[1], &endptr, 10);
 
-		exit_status = strtol(args[1], &endptr, 10);
-
-		if (*endptr || exit_status < 0)
+		if (*endptr || context->exit_code < 0)
 		{
-			fprintf(stderr, "./hsh: Illegal number: %s\n", args[1]);
+			print_error(context, 2);
 			return;
 		}
-	}	
+	}
 
 	signal(SIGINT, SIG_DFL);
-	free(input);
-	free_array(args);
-	exit(exit_status);
+	free(context->input);
+	free_array(context->args);
+	exit(context->exit_code);
 }
 
 /**
  * builtin_env - Prints the current environment variables
  *
- * @args: The array of arguments
+ * @context: Pointer to the execution context containing data and state
  *
  * Return: void
  */
-void builtin_env(char **args)
+void builtin_env(exec_context_t *context)
 {
 	char **env = environ;
 
-	if (args[1])
+	context->exec_count += 1;
+	if (context->args[1])
 	{
-		fprintf(stderr, "./hsh: invalid option -- '%s'\n", args[1]);
+		print_error(context, 125);
 		return;
 	}
 
