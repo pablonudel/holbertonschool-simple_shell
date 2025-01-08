@@ -9,45 +9,45 @@
  */
 char *get_input(exec_context_t *context)
 {
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t n_chars;
-	int i;
+	static char *buffer;
+	static char *current;
+	size_t buffer_size = 0;
+	char *line, *end;
 
-	n_chars = getline(&input, &input_size, stdin);
-	if (n_chars == EOF)
+	if (!current || !*current)
 	{
-		free(input);
-		if (isatty(STDIN_FILENO))
-			putchar('\n');
-		return (NULL);
-	}
-	if (n_chars == -1)
-	{
-		print_error(context, 1);
-		exit(context->exit_code);
-	}
-
-	if (n_chars > 0 && input[n_chars - 1] == '\n')
-		input[n_chars - 1] = '\0';
-
-	i = n_chars - 2;
-	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
-	{
-		input[i] = '\0';
-		i--;
+		free(buffer);
+		buffer = NULL;
+		current = NULL;
+		if (getline(&buffer, &buffer_size, stdin) == -1)
+		{
+			if (isatty(STDIN_FILENO))
+				putchar('\n');
+			free(buffer);
+			return (NULL);
+		}
+		current = buffer;
 	}
 
-	if (input[0] == '\0')
+	line = current;
+	while (*current && *current != '\n')
+		current++;
+	if (*current == '\n')
 	{
-		free(input);
-		context->exit_code = 1;
-		return (NULL);
+		*current = '\0';
+		current++;
 	}
 
-	return (input);
+	while (*line == ' ' || *line == '\t')
+		line++;
+	for (end = line + strlen(line) - 1;
+			end > line && (*end == ' ' || *end == '\t'); end--)
+		*end = '\0';
+	if (*line == '\0')
+		return (get_input(context));
+
+	return (strdup(line));
 }
-
 /**
  * split_input - Splits the input
  *
