@@ -15,6 +15,7 @@ int main(int argc __attribute__((unused)), char **argv)
 	context.exec_count = 0;
 	context.program_name = argv[0];
 	context.exit_code = 0;
+	context.buffer = NULL;
 
 	signal(SIGINT, handle_signint);
 
@@ -45,5 +46,6 @@ int main(int argc __attribute__((unused)), char **argv)
 		free_array(context.args);
 		free(context.input);
 	}
+	free(context.buffer);
 	return (context.exit_code);
 }

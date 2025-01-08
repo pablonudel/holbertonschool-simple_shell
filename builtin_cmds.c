@@ -28,6 +28,12 @@ void builtin_exit(exec_context_t *context)
 	signal(SIGINT, SIG_DFL);
 	free(context->input);
 	free_array(context->args);
+
+	if (context->buffer != NULL)
+	{
+		free(context->buffer);
+		context->buffer = NULL;
+	}
 	exit(context->exit_code);
 }
 

@@ -21,6 +21,7 @@ extern char **environ;
  * @exec_count: Count of executed commands or tasks
  * @program_name: Name of the current program or shell
  * @exit_code: Exit code of the last executed command
+ * @buffer: Internal buffer used to manage user input lines
  */
 typedef struct exec_context
 {
@@ -29,6 +30,7 @@ typedef struct exec_context
 	int exec_count;
 	char *program_name;
 	int exit_code;
+	char *buffer;
 } exec_context_t;
 
 void prompt(void);

@@ -9,21 +9,21 @@
  */
 char *get_input(exec_context_t *context)
 {
-	static char *buffer = NULL, *current = NULL;
+	static char *current = NULL;
 	char *result;
 	size_t buffer_size = 0;
 	char *line, *end;
 
 	if (!current || !*current)
 	{
-		free(buffer), buffer = NULL, current = NULL;
-		if (getline(&buffer, &buffer_size, stdin) == -1)
+		free(context->buffer), context->buffer = NULL, current = NULL;
+		if (getline(&context->buffer, &buffer_size, stdin) == -1)
 		{
 			if (isatty(STDIN_FILENO)) putchar('\n');
-			free(buffer), buffer = NULL;
+			free(context->buffer), context->buffer = NULL;
 			return (NULL);
 		}
-		current = buffer;
+		current = context->buffer;
 	}
 
 	line = current;
@@ -41,7 +41,7 @@ char *get_input(exec_context_t *context)
 	if (!result)
 	{
 		print_error(context, 1);
-		free(buffer), buffer = NULL;
+		free(context->buffer), context->buffer = NULL;
 		exit(context->exit_code);
 	}
 	return (result);
