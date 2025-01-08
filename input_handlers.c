@@ -9,45 +9,45 @@
  */
 char *get_input(exec_context_t *context)
 {
-	static char *buffer;
-	static char *current;
-	size_t buffer_size = 0;
-	char *line, *end;
+	char *input = NULL;
+	size_t input_size = 0;
+	ssize_t n_chars;
+	int i;
 
-	if (!current || !*current)
+	n_chars = getline(&input, &input_size, stdin);
+	if (n_chars == EOF)
 	{
-		free(buffer);
-		buffer = NULL;
-		current = NULL;
-		if (getline(&buffer, &buffer_size, stdin) == -1)
-		{
-			if (isatty(STDIN_FILENO))
-				putchar('\n');
-			free(buffer);
-			return (NULL);
-		}
-		current = buffer;
+		free(input);
+		if (isatty(STDIN_FILENO))
+			putchar('\n');
+		return (NULL);
+	}
+	if (n_chars == -1)
+	{
+		print_error(context, 1);
+		exit(context->exit_code);
 	}
 
-	line = current;
-	while (*current && *current != '\n')
-		current++;
-	if (*current == '\n')
+	if (n_chars > 0 && input[n_chars - 1] == '\n')
+		input[n_chars - 1] = '\0';
+
+	i = n_chars - 2;
+	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
 	{
-		*current = '\0';
-		current++;
+		input[i] = '\0';
+		i--;
 	}
 
-	while (*line == ' ' || *line == '\t')
-		line++;
-	for (end = line + strlen(line) - 1;
-			end > line && (*end == ' ' || *end == '\t'); end--)
-		*end = '\0';
-	if (*line == '\0')
-		return (get_input(context));
+	if (input[0] == '\0')
+	{
+		free(input);
+		context->exit_code = 1;
+		return (NULL);
+	}
 
-	return (strdup(line));
+	return (input);
 }
+
 /**
  * split_input - Splits the input
  *
@@ -59,6 +59,7 @@ char **split_input(exec_context_t *context)
 {
 	char **tokens;
 	char *token;
+	char *line;
 	int i = 0;
 
 	if (!context->input || *(context->input) == '\0')
@@ -71,19 +72,25 @@ char **split_input(exec_context_t *context)
 		exit(context->exit_code);
 	}
 
-	token = strtok(context->input, " \t\n");
-	while (token)
+	line = strtok(context->input, "\n");
+	while (line)
 	{
-		tokens[i] = strdup(token);
-		if (!tokens[i])
+		token = strtok(line, " \t");
+		while (token)
 		{
-			free_array(tokens);
-			print_error(context, 1);
-			exit(context->exit_code);
+			tokens[i] = strdup(token);
+			if (!tokens[i])
+			{
+				free_array(tokens);
+				print_error(context, 1);
+				exit(context->exit_code);
+			}
+			token = strtok(NULL, " \t");
+			i++;
 		}
-		token = strtok(NULL, " \t\n");
-		i++;
+		line = strtok(NULL, "\n");
 	}
+
 	tokens[i] = NULL;
 	return (tokens);
 }
