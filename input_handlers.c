@@ -80,6 +80,7 @@ char **split_input(exec_context_t *context)
 		if (!tokens[i])
 		{
 			free_array(tokens);
+			free(tokens);
 			print_error(context, 1);
 			exit(context->exit_code);
 		}
