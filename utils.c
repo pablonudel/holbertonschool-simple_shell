@@ -94,6 +94,12 @@ void print_error(exec_context_t *context, int code)
 		fprintf(stderr, "%s: invalid option -- '%s'\n",
 				context->args[0], context->args[1]);
 	}
+	else if (code == 3)
+        {
+                fprintf(stderr, "%s: %d: %s: too many arguments\n",
+                                context->program_name, context->exec_count,
+                                context->args[0]);
+        }
 	else if (code == 2)
 	{
 		fprintf(stderr, "%s: %d: %s: Illegal number: %s\n",
