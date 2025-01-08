@@ -19,6 +19,8 @@ void builtin_exit(exec_context_t *context)
 		if (*endptr || context->exit_code < 0)
 		{
 			print_error(context, 2);
+			free_array(context->args);
+			free(context->input);
 			return;
 		}
 	}
