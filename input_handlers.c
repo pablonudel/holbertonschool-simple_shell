@@ -9,8 +9,8 @@
  */
 char *get_input(exec_context_t *context)
 {
-	char *buffer = NULL;
-	char *current = NULL;
+	static char *buffer = NULL;
+	static char *current = NULL;
 	size_t buffer_size = 0;
 	char *line, *end;
 
