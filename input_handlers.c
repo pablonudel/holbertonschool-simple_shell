@@ -28,15 +28,21 @@ char *get_input(exec_context_t *context)
 		exit(context->exit_code);
 	}
 
-	i = 0;
-	while (input[i] != '\0')
+	if (n_chars > 0 && input[n_chars - 1] == '\n')
+		input[n_chars - 1] = '\0';
+
+	i = n_chars - 2;
+	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
 	{
-		if (input[i] == '\n')
-		{
-			input[i] = '\0';
-			break;
-		}
-		i++;
+		input[i] = '\0';
+		i--;
+	}
+
+	if (input[0] == '\0')
+	{
+		free(input);
+		context->exit_code = 1;
+		return (NULL);
 	}
 
 	return (input);

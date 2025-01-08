@@ -66,7 +66,7 @@ void exec_command(exec_context_t *context)
 		if (errno == ENOENT)
 			print_error(context, 127);
 		else
-			print_error(context, 126);
+			print_error(context, 127);
 		return;
 	}
 

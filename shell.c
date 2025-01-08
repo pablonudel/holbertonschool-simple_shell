@@ -31,6 +31,7 @@ int main(int argc __attribute__((unused)), char **argv)
 			free(context.input);
 			if (context.args)
 				free_array(context.args);
+			context.exit_code = 1;
 			continue;
 		}
 
