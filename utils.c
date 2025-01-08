@@ -97,7 +97,7 @@ void print_error(exec_context_t *context, int code)
 	}
 	else
 	{
-		fprintf(stderr, "%s: %d: %s: An error occurred. Exiting with failure.\n",
+		fprintf(stderr, "%s: %d: %s: No such file or directory\n",
 				context->program_name, context->exec_count,
 				context->args[0]);
 	}

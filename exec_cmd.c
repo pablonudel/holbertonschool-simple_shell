@@ -14,8 +14,15 @@ char *get_cmd(char *arg)
 
 	if (strchr(arg, '/'))
 	{
-		if (stat(arg, &st) == 0 && access(arg, X_OK) != 0)
-			return (strdup(arg));
+		if (stat(arg, &st) == 0)
+		{
+			if (access(arg, X_OK) != 0)
+				errno = EACCES;
+			else
+				return (strdup(arg));
+		}
+		else
+			errno = ENOENT;
 
 		return (NULL);
 	}
@@ -56,7 +63,10 @@ void exec_command(exec_context_t *context)
 	context->exec_count += 1;
 	if (!command)
 	{
-		print_error(context, 127);
+		if (errno == ENOENT)
+			print_error(context, 127);
+		else
+			print_error(context, 126);
 		return;
 	}
 
