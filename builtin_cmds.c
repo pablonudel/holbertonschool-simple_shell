@@ -8,24 +8,21 @@
  *
  * Return: the positive number or -1
  */
-int string_to_int(const char *str) {
-	
+int string_to_int(const char *str)
+{
+
 	int result = 0;
 
 	if (*str == '-')
-	{
 		return (-1);
-	}
 
-	while (*str != '\0') {
+	while (*str != '\0')
+	{
 		if (*str >= '0' && *str <= '9')
-		{
 			result = result * 10 + (*str - '0');
-		}
 		else
-		{
 			return (-1);
-		}
+
 		str++;
 	}
 
@@ -41,7 +38,6 @@ int string_to_int(const char *str) {
  */
 void builtin_exit(exec_context_t *context)
 {
-
 	context->exec_count += 1;
 	if (context->args[1])
 	{
