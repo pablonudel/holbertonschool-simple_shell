@@ -1,7 +1,15 @@
 #include "shell.h"
 #include <ctype.h>
 
+/**
+ * string_to_int - check if a string is a positive number
+ *
+ * @str: the string to check
+ *
+ * Return: the positive number or -1
+ */
 int string_to_int(const char *str) {
+	
 	int result = 0;
 
 	if (*str == '-')
@@ -10,7 +18,7 @@ int string_to_int(const char *str) {
 	}
 
 	while (*str != '\0') {
-		if (isdigit(*str))
+		if (*str >= '0' && *str <= '9')
 		{
 			result = result * 10 + (*str - '0');
 		}
