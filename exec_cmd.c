@@ -88,7 +88,6 @@ void exec_command(exec_context_t *context)
 	{
 		int status;
 
-		context->exit_code = 2;
 		waitpid(pid, &status, 0);
 	}
 
