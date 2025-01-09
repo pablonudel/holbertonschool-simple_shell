@@ -1,4 +1,28 @@
 #include "shell.h"
+#include <ctype.h>
+
+int string_to_int(const char *str) {
+	int result = 0;
+
+	if (*str == '-')
+	{
+		return (-1);
+	}
+
+	while (*str != '\0') {
+		if (isdigit(*str))
+		{
+			result = result * 10 + (*str - '0');
+		}
+		else
+		{
+			return (-1);
+		}
+		str++;
+	}
+
+	return (result);
+}
 
 /**
  * builtin_exit - Exits the shell
@@ -13,9 +37,9 @@ void builtin_exit(exec_context_t *context)
 	context->exec_count += 1;
 	if (context->args[1])
 	{
+		context->exit_code = string_to_int(context->args[1]);
 
-		if (sscanf(context->args[1], "%d", &context->exit_code) != 1 
-				|| context->exit_code < 0)
+		if (context->exit_code == -1)
 		{
 			print_error(context, 2);
 			free_array(context->args);
