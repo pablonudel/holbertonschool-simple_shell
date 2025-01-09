@@ -9,14 +9,13 @@
  */
 void builtin_exit(exec_context_t *context)
 {
-	char *endptr;
 
 	context->exec_count += 1;
 	if (context->args[1])
 	{
-		context->exit_code = strtol(context->args[1], &endptr, 10);
 
-		if (*endptr || context->exit_code < 0)
+		if (sscanf(context->args[1], "%d", &context->exit_code) != 1 
+				|| context->exit_code < 0)
 		{
 			print_error(context, 2);
 			free_array(context->args);
