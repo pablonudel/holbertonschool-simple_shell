@@ -2,6 +2,7 @@
 
 /**
  * read_user_input - Reads user input into the context buffer
+ *
  * @context: Pointer to the execution context
  *
  * Return: Pointer to the updated buffer or NULL if EOF
@@ -27,6 +28,7 @@ static char *read_user_input(exec_context_t *context)
 
 /**
  * trim_whitespace - Removes leading and trailing whitespace from a string
+ *
  * @line: Pointer to the string to trim
  *
  * Return: Pointer to the trimmed string
@@ -38,7 +40,7 @@ static char *trim_whitespace(char *line)
 	while (*line == ' ' || *line == '\t')
 		line++;
 
-	if (*line == '\0') /* String is empty */
+	if (*line == '\0')
 		return (line);
 
 	end = line + strlen(line) - 1;
@@ -50,6 +52,7 @@ static char *trim_whitespace(char *line)
 
 /**
  * get_input - Processes user input, trims it, and handles recursion if empty
+ *
  * @context: Pointer to the execution context
  *
  * Return: Pointer to the processed input string
