@@ -89,11 +89,6 @@ void print_error(exec_context_t *context, int code)
 		fprintf(stderr, "%s: %d: %s: not found\n",
 				context->program_name, context->exec_count, context->args[0]);
 	}
-	else if (code == 126)
-	{
-		fprintf(stderr, "%s: %d: %s: permission denied\n",
-				context->program_name, context->exec_count, context->args[0]);
-	}
 	else if (code == 125)
 	{
 		fprintf(stderr, "%s: invalid option -- '%s'\n",
