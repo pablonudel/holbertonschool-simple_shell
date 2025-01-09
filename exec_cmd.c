@@ -73,7 +73,6 @@ void exec_command(exec_context_t *context)
 	pid = fork();
 	if (pid == -1)
 	{
-		free(command);
 		print_error(context, 1);
 		exit(context->exit_code);
 	}
@@ -81,7 +80,6 @@ void exec_command(exec_context_t *context)
 	{
 		if (execve(command, context->args, environ) == -1)
 		{
-			free(command);
 			print_error(context, 1);
 			exit(context->exit_code);
 		}
