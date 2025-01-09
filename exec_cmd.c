@@ -22,8 +22,10 @@ char *get_cmd(char *arg)
 				return (strdup(arg));
 		}
 		else
+		{
 			errno = ENOENT;
-
+			return (NULL);
+		}
 		return (NULL);
 	}
 	path = _getenv("PATH");
@@ -63,10 +65,11 @@ void exec_command(exec_context_t *context)
 	context->exec_count += 1;
 	if (!command)
 	{
-		if (errno == ENOENT)
+		if (errno == EACCES)
+			print_error(context, 126);
+		else if (errno == ENOENT)
 			print_error(context, 127);
-		else
-			print_error(context, 127);
+
 		return;
 	}
 
@@ -90,6 +93,7 @@ void exec_command(exec_context_t *context)
 	{
 		int status;
 
+		context->exit_code = 2;
 		waitpid(pid, &status, 0);
 	}
 
