@@ -14,7 +14,7 @@ char *get_cmd(char *arg)
 
 	if (strchr(arg, '/'))
 	{
-		if (stat(arg, &st) == 0 && access(arg, X_OK) == 0)
+		if (stat(arg, &st) == 0)
 			return (strdup(arg));
 
 		return (NULL);
@@ -79,6 +79,10 @@ void exec_command(exec_context_t *context)
 		int status;
 
 		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+			context->exit_code = 2;
+		else
+			context->exit_code = WEXITSTATUS(status);
 	}
 
 	free(command);
