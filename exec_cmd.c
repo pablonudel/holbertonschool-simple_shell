@@ -52,6 +52,7 @@ void exec_command(exec_context_t *context)
 {
 	char *command = get_cmd(context->args[0]);
 	pid_t pid;
+	int status;
 
 	context->exec_count += 1;
 	if (!command)
@@ -59,7 +60,12 @@ void exec_command(exec_context_t *context)
 		print_error(context, 127);
 		return;
 	}
-
+	if (access(command, X_OK) == -1)
+	{
+		print_error(context, 126);
+		free(command);
+		return;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -76,14 +82,11 @@ void exec_command(exec_context_t *context)
 	}
 	else
 	{
-		int status;
-
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
 			context->exit_code = 2;
 		else
 			context->exit_code = WEXITSTATUS(status);
 	}
-
 	free(command);
 }
