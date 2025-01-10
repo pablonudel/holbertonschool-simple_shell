@@ -60,40 +60,44 @@ static char *trim_whitespace(char *line)
 char *get_input(exec_context_t *context)
 {
 	static char *current;
-	char *result;
+	char *result = NULL;
 	char *line;
 
-	if (!current || !*current)
+	current = NULL;
+	while (1)
 	{
-		current = read_user_input(context);
-		if (!current)
-			return (NULL);
+		if (!current || !*current)
+		{
+			current = read_user_input(context);
+			if (!current)
+				return (NULL);
+		}
+
+		line = current;
+
+		while (*current && *current != '\n')
+			current++;
+		if (*current == '\n')
+			*current++ = '\0';
+
+		line = trim_whitespace(line);
+
+		if (*line != '\0')
+		{
+			result = strdup(line);
+			if (!result)
+			{
+				print_error(context, 1);
+				free(context->buffer);
+				context->buffer = NULL;
+				exit(context->exit_code);
+			}
+			return (result);
+		}
+
+		if (!*current)
+			current = NULL;
 	}
-
-	line = current;
-	while (*current && *current != '\n')
-		current++;
-	if (*current == '\n')
-		*current++ = '\0';
-
-	line = trim_whitespace(line);
-
-	if (*line == '\0')
-	{
-		current = NULL;
-		return (get_input(context));
-	}
-
-	result = strdup(line);
-	if (!result)
-	{
-		print_error(context, 1);
-		free(context->buffer);
-		context->buffer = NULL;
-		exit(context->exit_code);
-	}
-
-	return (result);
 }
 
 /**
