@@ -51,7 +51,7 @@ static char *trim_whitespace(char *line)
 }
 
 /**
- * get_input - Processes user input, trims it, and handles recursion if empty
+ * get_input - Processes user input
  *
  * @context: Pointer to the execution context
  *
