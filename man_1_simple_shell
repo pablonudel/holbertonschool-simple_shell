@@ -125,7 +125,7 @@ The shell uses the PATH environment variable to locate external commands.
 Known limitations are those listed above and other advanced shell features.
 
 .SH AUTHORS
-Dan Florentin & Pablo Nudel.
+Dan Florentin Ishimwe & Pablo Nudel.
 
 .SH SEE ALSO
 bash(1), sh(1)
