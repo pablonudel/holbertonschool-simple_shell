@@ -1,5 +1,6 @@
 
-![Header](https://scontent.ftls1-1.fna.fbcdn.net/v/t39.30808-6/429641439_792522079563968_5846022648137048441_n.png?_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=DTsB1dnNSKsQ7kNvgHgRx1B&_nc_zt=23&_nc_ht=scontent.ftls1-1.fna&_nc_gid=A1quME8CT2dQD_UpDlb1OK4&oh=00_AYClq4xoLfJMag0uRzJFhsqJlxdASL0uV-BE_oiBQli9Fg&oe=6788B6F3)
+![Header](https://raw.githubusercontent.com/pablonudel/holbertonschool-simple_shell/refs/heads/pablonudel/readme_header.jpg)
+
 # Holberton School Simple Shell
 
 This program, made as a project for Holberton School, creates a basic command-line tool that allows users to interact with the operating system. It enables the execution of a limited set of built-in commands, as well as external programs, both interactively and in non-interactive modes.
