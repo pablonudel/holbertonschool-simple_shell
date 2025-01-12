@@ -55,14 +55,15 @@ Example:
 root@ubuntu:/holbertonschool-simple_shell# ./hsh
 simple_shell:~$ ls -l
 total 276
--rw-r--r-- 1 root root     17 Dec 16 10:02 README.md
--rw-r--r-- 1 root root   1525 Jan  9 16:30 builtin_cmds.c
+-rw-r--r-- 1 root root    146 Jan 10 09:53 AUTHORS
+-rw-r--r-- 1 root root     17 Jan 10 10:02 README.md
+-rw-r--r-- 1 root root   1525 Jan 10 16:30 builtin_cmds.c
 -rw-r--r-- 1 root root   1596 Jan 10 11:58 exec_cmd.c
 -rwxr-xr-x 1 root root 165296 Jan 10 14:36 hsh
 -rw-r--r-- 1 root root   2498 Jan 10 15:45 input_handlers.c
--rw-r--r-- 1 root root   2414 Jan  3 10:11 man_1_simple_shell
--rw-r--r-- 1 root root   1031 Jan  8 18:43 shell.c
--rw-r--r-- 1 root root   1188 Jan  8 17:23 shell.h
+-rw-r--r-- 1 root root   2414 Jan 10 10:11 man_1_simple_shell
+-rw-r--r-- 1 root root   1031 Jan 10 18:43 shell.c
+-rw-r--r-- 1 root root   1188 Jan 10 17:23 shell.h
 -rw-r--r-- 1 root root   2080 Jan 10 11:58 utils.c
 simple_shell:~$ exit
 root@ubuntu:/holbertonschool-simple_shell#
