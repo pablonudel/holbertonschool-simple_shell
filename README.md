@@ -1,7 +1,7 @@
 
 ![Header](https://raw.githubusercontent.com/pablonudel/holbertonschool-simple_shell/refs/heads/pablonudel/readme_header.jpg)
 
-# Holberton School Simple Shell
+# Holberton School - Simple Shell Project
 
 This program, made as a project for Holberton School, creates a basic command-line tool that allows users to interact with the operating system. It enables the execution of a limited set of built-in commands, as well as external programs, both interactively and in non-interactive modes.
 
