@@ -27,17 +27,17 @@ Here’s a summarized version of the general requirements for this project:
 - GCC compiler
 
 #### 1. Clone the repository
-```http
+```
 git clone https://github.com/pablonudel/holbertonschool-simple_shell.git
 ```
 
 #### 2. Navigate to the project directory
-```http
+```
 cd holbertonschool-simple_shell/
 ```
 
 #### 3. Compile the program
-```http
+```
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
@@ -50,7 +50,7 @@ This simple shell can be used in two modes:
 Running the shell program with `./hsh` , it prints a prompt `simple_shell:~$` and waits for user's input to execute the command. To exit the shell `exit` must be typed.
 
 Example:
-```shell
+```
 root@ubuntu:/holbertonschool-simple_shell# ./hsh
 simple_shell:~$ ls -l
 total 276
@@ -71,7 +71,7 @@ root@ubuntu:/holbertonschool-simple_shell#
 The shell reads commands from a file or pipe and commands are executed sequentially.
 
 Examples:
-```shell
+```
 root@ubuntu:/holbertonschool-simple_shell# cat commands.txt
 echo Hello World!
 pwd
@@ -80,7 +80,7 @@ Hello World!
 /holbertonschool-simple_shell
 root@ubuntu:/holbertonschool-simple_shell#
 ```
-```shell
+```
 root@ubuntu:/holbertonschool-simple_shell# echo "echo Hello World!
 pwd" | ./hsh
 Hello World!
@@ -103,31 +103,31 @@ The shell implements basic error handling to provide informative messages to the
 #### Command not found
 If an unknown command is entered, the shell displays a message indicating the command was not found with an exit code: `127`
 
-```shell
+```
 ./hsh: 1: cmd: not found
 ```
 #### Permission denied
 If the shell tries to execute a file that the user does not have permission to execute, it will display a permission denied error with an exit code: `126`
 
-```shell
+```
 ./hsh: 1: ./no_permissions: permission denied
 ```
 #### Invalid command argument
 If an unknown command option is entered, the shell displays a message indicating the invalid option with an exit code: `2`
-```shell
+```
 ls: invalid option -- 'z'
 Try 'ls --help' for more information.
 ```
 #### EXIT Built-in command error
 If a non number or negative number option is entered, the shell displays a message indicating the illegal number with an exit code: `2`
-```shell
+```
 ./hsh: 1: exit: Illegal number: -1
 - or -
 ./hsh: 1: exit: Illegal number: arg
 ```
 #### ENV Built-in command error
 As the env built-in command is a limited version that not handles any options. If any option is entered, the shell displays a message indicating the invalid option with an exit code: `125`
-```shell
+```
 env: invalid option -- '-l'
 ```
 
