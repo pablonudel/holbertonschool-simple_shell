@@ -1,0 +1,131 @@
+.TH hsh 1 "January 10, 2025" "1.0" "General Commands Manual"
+.SH NAME
+\fBhsh\fR - a simple command language interpreter (shell)
+
+.SH SYNOPSIS
+\fBhsh\fR [command_name [argument...]]
+
+.SH DESCRIPTION
+\fBhsh\fR is a basic command line shell program. It provides a command line interface for users to enter commands and interact with the operating system. The shell reads commands from the user's input, parses them, and executes them. It supports the following features:
+.PP
+.B Built-in Commands:
+.PP
+.RS
+.nf
+\fBexit\fR	Exits the shell. Optionally accepts an integer as an exit status.
+\fBenv\fR	Prints the current environment variables.
+.fi
+.RE
+.PP
+.B External Command Execution:
+.PP
+.RS
+.nf
+- Executes external commands by searching for them in the directories specified in the PATH environment variable.
+- Supports command arguments.
+.fi
+.RE
+.PP
+.B Input Handling:
+.PP
+.RS
+.nf
+- Reads user input from standard input.
+- Handles multiple lines of input.
+- Provides a basic command line prompt.
+.fi
+.RE
+.PP
+.B Error Handling:
+.PP
+.RS
+Provides informative error messages for various issues, including:
+.PP
+.nf
+- Command not found
+- Permission denied
+- Invalid options
+- Invalid arguments
+- Internal errors
+.fi
+.RE
+
+.SH OPTIONS
+None options supported.
+
+.SH USAGE
+.PP
+.nf
+.B Interactive Mode:
+The shell prints a prompt, waits for user input, processes each command, and displays results.
+
+Example:
+.if
+
+
+.RS
+.nf
+$ ./hsh
+simple_shell:~$ ls
+hsh main.c shell.c
+simple_shell:~$ exit
+$
+.fi
+.RE
+.PP
+.nf
+.B Non Interactive Mode:
+The shell reads input from a file or pipe, processes the commands and executes them sequentially, without allocating a new pseudo-terminal.
+
+Example:
+.if
+
+
+.RS
+.nf
+$ echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+$ cat test_ls_2
+/bin/ls
+/bin/ls
+$ cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+$
+.fi
+.RE
+
+.SH SIGNALS
+\fBSIGINT\fR (Ctrl+C): Interrupts the current command and returns the shell to the prompt.
+
+.SH ENVIRONMENT
+The shell uses the PATH environment variable to locate external commands.
+
+.SH EXIT STATUS
+.nf
+\fB0\fR     Successful execution.
+\fB1\fR     General error (e.g., memory allocation failure).
+\fB126\fR   Permission denied to execute the command.
+\fB127\fR   Command not found in the PATH.
+\fB125\fR   Invalid option provided to a command.
+.fi
+
+.SH LIMITATIONS
+.nf
+1. No other built-in commands except: exit and env
+2. No handling the commands separator ;
+3. No handling the && and || shell logical operators
+4. No handling variables replacement
+5. No handling comments (#)
+6. No handling complex error outputs
+7. File as input: this simple shell can take a file as a command line argument, but the feature is not entirely completed.
+.fi
+
+.SH BUGS
+Known limitations are those listed above and other advanced shell features.
+
+.SH AUTHORS
+Dan Florentin & Pablo Nudel.
+
+.SH SEE ALSO
+bash(1), sh(1)
