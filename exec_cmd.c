@@ -69,15 +69,15 @@ void exec_command(exec_context_t *context)
 	pid = fork();
 	if (pid == -1)
 	{
-		print_error(context, 1);
-		exit(context->exit_code);
+		fprintf(stderr, "Error: Fork failed\nExit...\n");
+		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
 		if (execve(command, context->args, environ) == -1)
 		{
-			print_error(context, 1);
-			exit(context->exit_code);
+			fprintf(stderr, "Error: Command execution failed\nExit...\n");
+			exit(EXIT_FAILURE);
 		}
 	}
 	else
