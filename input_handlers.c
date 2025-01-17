@@ -87,10 +87,10 @@ char *get_input(exec_context_t *context)
 			result = strdup(line);
 			if (!result)
 			{
-				print_error(context, 1);
+				fprintf(stderr, "Error: memory allocation failed\nExit...\n");
 				free(context->buffer);
 				context->buffer = NULL;
-				exit(context->exit_code);
+				exit(EXIT_FAILURE);
 			}
 			return (result);
 		}
@@ -119,8 +119,8 @@ char **split_input(exec_context_t *context)
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 	{
-		print_error(context, 1);
-		exit(context->exit_code);
+		fprintf(stderr, "Error: memory allocation failed\nExit...\n");
+		exit(EXIT_FAILURE);
 	}
 
 	token = strtok(context->input, " \t\n");
@@ -130,8 +130,8 @@ char **split_input(exec_context_t *context)
 		if (!tokens[i])
 		{
 			free_array(tokens);
-			print_error(context, 1);
-			exit(context->exit_code);
+			fprintf(stderr, "Error: memory allocation failed\nExit...\n");
+			exit(EXIT_FAILURE);
 		}
 		token = strtok(NULL, " \t\n");
 		i++;
